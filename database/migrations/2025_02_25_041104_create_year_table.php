@@ -12,7 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('year', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('year_uuid')->primary();
+            $table->string('year');
+            $table->string('year_description');
             $table->timestamps();
         });
     }
