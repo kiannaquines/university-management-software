@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace app\Presentation\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class InstructorController extends Controller
+class SemesterController extends Controller
 {
     /**
      * Display a listing of the resource.

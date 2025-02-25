@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace app\Presentation\Http\Controllers;
 
 use Illuminate\Http\Request;
-use function Pest\version;
 
 class StudentController extends Controller
 {
