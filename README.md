@@ -3,3 +3,8 @@
 ## Laravel University Management Software
 
 This project is just a practice for a laravel web framework.
+
+
+## Design Framework
+
+This project is a implementation of Domain Driven Design Framework (DDD)
