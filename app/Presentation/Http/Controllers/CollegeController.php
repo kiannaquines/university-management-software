@@ -1,26 +1,26 @@
 <?php
 
-namespace App\Application\Http\Controllers;
+namespace App\Presentation\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class StudentController extends Controller
+class CollegeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index() : View
     {
-        return view('Student.index');
+        return view('College.index');
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create() : View
+    public function create()
     {
-        return view('student.create');
+        //
     }
 
     /**
@@ -34,9 +34,9 @@ class StudentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id) : View
+    public function show(string $id)
     {
-        return view('student.show');
+        //
     }
 
     /**
@@ -55,10 +55,15 @@ class StudentController extends Controller
         //
     }
 
-    public function confirm(string $id) : View
+    /**
+     * Confirm removal of the specified resource from storage.
+     */
+    public function confirm(string $id)
     {
-        return view('student.confirm');
+        //
     }
+
+
     /**
      * Remove the specified resource from storage.
      */

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Application\Http\Controllers;
+namespace App\Presentation\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class GradesController extends Controller
+class YearController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -53,6 +53,15 @@ class GradesController extends Controller
     {
         //
     }
+
+    /**
+     * Confirm removal of the specified resource from storage.
+     */
+    public function confirm(string $id)
+    {
+        //
+    }
+
 
     /**
      * Remove the specified resource from storage.

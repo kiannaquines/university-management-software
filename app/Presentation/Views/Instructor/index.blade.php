@@ -6,6 +6,7 @@
     <title>Instructor</title>
 </head>
 <body>
+<h1>Instructor List</h1>
 
 </body>
 </html>

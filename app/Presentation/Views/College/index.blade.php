@@ -6,6 +6,6 @@
     <title>College</title>
 </head>
 <body>
-
+    <h1>College List</h1>
 </body>
 </html>

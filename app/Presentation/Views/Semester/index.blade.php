@@ -6,6 +6,7 @@
     <title>Semester</title>
 </head>
 <body>
+<h1>Semester List</h1>
 
 </body>
 </html>
