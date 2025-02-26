@@ -6,6 +6,6 @@
     <title>Department</title>
 </head>
 <body>
-
+<h1>Department List</h1>
 </body>
 </html>

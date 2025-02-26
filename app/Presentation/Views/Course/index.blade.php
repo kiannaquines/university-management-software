@@ -6,6 +6,6 @@
     <title>Course</title>
 </head>
 <body>
-
+    <h1>Course List</h1>
 </body>
 </html>

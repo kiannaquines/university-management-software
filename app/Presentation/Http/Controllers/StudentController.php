@@ -1,25 +1,26 @@
 <?php
 
-namespace App\Application\Http\Controllers;
+namespace App\Presentation\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
-class DepartmentController extends Controller
+class StudentController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index() : View
     {
-        //
+        return view('Student.index');
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create() : View
     {
-        //
+        return view('Student.create');
     }
 
     /**
@@ -33,9 +34,9 @@ class DepartmentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id) : View
     {
-        //
+        return view('Student.show');
     }
 
     /**
@@ -53,6 +54,15 @@ class DepartmentController extends Controller
     {
         //
     }
+
+    /**
+     * Confirm removal of the specified resource from storage.
+     */
+    public function confirm(string $id) : View
+    {
+        return view('Student.confirm');
+    }
+
 
     /**
      * Remove the specified resource from storage.

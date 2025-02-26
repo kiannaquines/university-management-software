@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Application\Http\Controllers;
+namespace App\Presentation\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class YearController extends Controller
+class CourseController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index() : string
     {
-        //
+        return 'Course List';
     }
 
     /**
@@ -50,6 +50,14 @@ class YearController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
+    {
+        //
+    }
+
+    /**
+     * Confirm removal of the specified resource from storage.
+     */
+    public function confirm(string $id)
     {
         //
     }
