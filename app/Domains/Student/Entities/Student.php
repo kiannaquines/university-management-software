@@ -7,32 +7,64 @@ use App\Domains\Student\ValueObjects\Email;
 class Student
 {
     private int $id;
-    private string $name;
+    private string $firstName;
+    private string $lastName;
+    private string $middleName;
     private Email $email;
 
-    public function __construct(string $id, string $name, Email $email)
+    private string $address;
+    private string $gender;
+    private string $extension;
+
+    public function __construct(int $id, string $firstName, string $lastName, string $middleName, Email $email, string $address, string $gender, string $extension)
     {
         $this->id = $id;
-        $this->name = $name;
+        $this->firstName = $firstName;
+        $this->lastName = $lastName;
+        $this->middleName = $middleName;
         $this->email = $email;
+        $this->address = $address;
+        $this->gender = $gender;
+        $this->extension = $extension;
     }
 
-    public function enrollInCourse(string $courseId): void
+    public function getId(): int
     {
-        // Example business logic: a student can enroll in a course
-        // Could add validation (e.g., max courses) or events here
+        return $this->id;
     }
 
-    public function updateName(string $newName): void
+    public function getFirstName(): string
     {
-        if (empty($newName)) {
-        throw new \InvalidArgumentException("Name cannot be empty.");
-        }
-        $this->name = $newName;
+        return $this->firstName;
     }
 
-    // Getters
-    public function id(): string { return $this->id; }
-    public function name(): string { return $this->name; }
-    public function email(): Email { return $this->email; }
+    public function getLastName(): string
+    {
+        return $this->lastName;
+    }
+
+    public function getMiddleName(): string
+    {
+        return $this->middleName;
+    }
+
+    public function getEmail(): Email
+    {
+        return $this->email;
+    }
+
+    public function getAddress(): string
+    {
+        return $this->address;
+    }
+
+    public function getGender(): string
+    {
+        return $this->gender;
+    }
+
+    public function getExtension(): string
+    {
+        return $this->extension;
+    }
 }

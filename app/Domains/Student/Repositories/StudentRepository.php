@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Domains\Student\Services;
+namespace App\Domains\Student\Repositories;
 
 use App\Domains\Student\Entities\Student;
-use App\Domains\Student\Interface\IEloquentStudentRepository;
+use App\Domains\Student\Interface\IStudentRepository;
 
-class EloquentStudentRepository implements IEloquentStudentRepository {
+class StudentRepository implements IStudentRepository {
     public function findById(string $id): ?Student
     {
         return $this->findById($id);
