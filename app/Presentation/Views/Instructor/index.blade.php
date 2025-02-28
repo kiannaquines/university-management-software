@@ -1,12 +1,15 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Instructor</title>
-</head>
-<body>
-<h1>Instructor List</h1>
+@extends('Layout.layout')
 
-</body>
-</html>
+@section('title', 'Instructor List')
+
+@section('css')
+    {{-- css goes here --}}
+@endsection
+
+@section('content')
+    <h1>Instructor List</h1>
+@endsection
+
+@section('js')
+    {{-- js goes here --}}
+@endsection

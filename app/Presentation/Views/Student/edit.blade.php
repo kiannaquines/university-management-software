@@ -1,11 +1,15 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Edit Student Information</title>
-</head>
-<body>
-<h3>Edit Student Information</h3>
-</body>
-</html>
+@extends('Layout.layout')
+
+@section('title', 'Edit Student')
+
+@section('css')
+    {{-- css goes here --}}
+@endsection
+
+@section('content')
+    <h1>Edit Student</h1>
+@endsection
+
+@section('js')
+    {{-- js goes here --}}
+@endsection

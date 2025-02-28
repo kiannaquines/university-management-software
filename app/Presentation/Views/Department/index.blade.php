@@ -1,11 +1,15 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Department</title>
-</head>
-<body>
-<h1>Department List</h1>
-</body>
-</html>
+@extends('Layout.layout')
+
+@section('title', 'Department List')
+
+@section('css')
+    {{-- css goes here --}}
+@endsection
+
+@section('content')
+    <h1>Department List</h1>
+@endsection
+
+@section('js')
+    {{-- js goes here --}}
+@endsection
