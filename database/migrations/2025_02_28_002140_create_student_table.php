@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('firstname')->index();
             $table->string('lastname')->index();
-            $table->string('middlename');
+            $table->string('middlename')->nullable();
             $table->string('gender');
-            $table->string('extension');
+            $table->string('extension')->nullable();
             $table->date('age');
             $table->string('address');
             $table->string('student_id')->index();
