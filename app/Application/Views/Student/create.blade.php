@@ -7,7 +7,9 @@
 @endsection
 
 @section('content')
-    <form>
+    <form action="{{ route('student.store') }}">
+        @method('POST')
+        @csrf
         <h3 class="text-2xl font-semibold text-center mb-2">Create Students Information</h3>
         <div class="w-full max-w-sm min-w-[200px]">
             <label for="firstname" class="text-gray-500 text-sm">Firstname</label>
