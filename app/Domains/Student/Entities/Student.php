@@ -2,15 +2,9 @@
 
 namespace App\Domains\Student\Entities;
 
-use App\Domains\Student\ValueObjects\Email;
-
 class Student
 {
-    private int $id {
-        get {
-            return $this->id;
-        }
-    }
+
     private string $firstName {
         get {
             return $this->firstName;
@@ -26,7 +20,7 @@ class Student
             return $this->middleName;
         }
     }
-    private Email $email {
+    private string $email {
         get {
             return $this->email;
         }
@@ -48,9 +42,8 @@ class Student
         }
     }
 
-    public function __construct(int $id, string $firstName, string $lastName, string $middleName, Email $email, string $address, string $gender, string $extension)
+    public function __construct(string $firstName, string $lastName, string $middleName, string $email, string $address, string $gender, string $extension)
     {
-        $this->id = $id;
         $this->firstName = $firstName;
         $this->lastName = $lastName;
         $this->middleName = $middleName;
