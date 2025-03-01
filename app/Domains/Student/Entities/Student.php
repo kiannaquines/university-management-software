@@ -6,15 +6,47 @@ use App\Domains\Student\ValueObjects\Email;
 
 class Student
 {
-    private int $id;
-    private string $firstName;
-    private string $lastName;
-    private string $middleName;
-    private Email $email;
+    private int $id {
+        get {
+            return $this->id;
+        }
+    }
+    private string $firstName {
+        get {
+            return $this->firstName;
+        }
+    }
+    private string $lastName {
+        get {
+            return $this->lastName;
+        }
+    }
+    private string $middleName {
+        get {
+            return $this->middleName;
+        }
+    }
+    private Email $email {
+        get {
+            return $this->email;
+        }
+    }
 
-    private string $address;
-    private string $gender;
-    private string $extension;
+    private string $address {
+        get {
+            return $this->address;
+        }
+    }
+    private string $gender {
+        get {
+            return $this->gender;
+        }
+    }
+    private string $extension {
+        get {
+            return $this->extension;
+        }
+    }
 
     public function __construct(int $id, string $firstName, string $lastName, string $middleName, Email $email, string $address, string $gender, string $extension)
     {
@@ -28,43 +60,4 @@ class Student
         $this->extension = $extension;
     }
 
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-    public function getFirstName(): string
-    {
-        return $this->firstName;
-    }
-
-    public function getLastName(): string
-    {
-        return $this->lastName;
-    }
-
-    public function getMiddleName(): string
-    {
-        return $this->middleName;
-    }
-
-    public function getEmail(): Email
-    {
-        return $this->email;
-    }
-
-    public function getAddress(): string
-    {
-        return $this->address;
-    }
-
-    public function getGender(): string
-    {
-        return $this->gender;
-    }
-
-    public function getExtension(): string
-    {
-        return $this->extension;
-    }
 }
