@@ -2,39 +2,65 @@
 
 namespace App\Domains\Student\Services;
 
-
 use App\Domains\Student\Entities\Student;
-use App\Domains\Student\Interface\IStudentService;
+use App\Domains\Student\Interfaces\StudentRepositoryInterface;
+use App\Domains\Student\Interfaces\StudentServiceInterface;
 
-class StudentService implements IStudentService {
+class StudentService implements StudentServiceInterface
+{
+    private StudentRepositoryInterface $repository;
 
-    public function create(Student $student): void
+    public function __construct(StudentRepositoryInterface $repository)
     {
-        // TODO: Implement create() method.
+        $this->repository = $repository;
     }
 
-    public function update(Student $student): void
+    public function createStudent(array $data): Student
     {
-        // TODO: Implement update() method.
+        $student = new Student(
+        $data['firstname'],
+        $data['lastname'],
+        $data['middlename'] ?? null,
+        $data['gender'],
+        $data['extension'] ?? null,
+        $data['age'],
+        $data['address'],
+        $data['student_id']
+    );
+        $this->repository->save($student);
+        return $student;
     }
 
-    public function findById(string $id): ?Student
+    public function getStudentById(string $id): ?Student
     {
-        // TODO: Implement findById() method.
+        return $this->repository->findById($id);
     }
 
-    public function findByEmail(string $email): ?Student
+    public function getAllStudents(): array
     {
-        // TODO: Implement findByEmail() method.
+        return $this->repository->findAll();
     }
 
-    public function searchStudent(string $email): ?Student
+    public function updateStudent(string $id, array $data): void
     {
-        // TODO: Implement searchStudent() method.
+        $student = $this->repository->findById($id);
+        if (!$student) throw new \Exception("Student not found.");
+
+        $updatedStudent = new Student(
+        $data['firstname'] ?? $student->firstname,
+        $data['lastname'] ?? $student->lastname,
+        $data['middlename'] ?? $student->middlename,
+        $data['gender'] ?? $student->gender,
+        $data['extension'] ?? $student->extension,
+        $data['age'] ?? $student->age,
+        $data['address'] ?? $student->address,
+        $data['student_id'] ?? $student->student_id
+        );
+        $this->repository->update($updatedStudent);
     }
 
-    public function delete(int $id): void
+    public function deleteStudent(string $id): void
     {
-        // TODO: Implement delete() method.
+        $this->repository->delete($id);
     }
 }

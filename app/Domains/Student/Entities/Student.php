@@ -4,53 +4,74 @@ namespace App\Domains\Student\Entities;
 
 class Student
 {
+    public string $firstname {
+        get {
+            return $this->firstname;
+        }
+        set(string $firstname) => $this->firstname = $firstname;
+    }
+    public string $lastname {
+        get {
+            return $this->lastname;
+        }
+        set(string $lastname) => $this->lastname = $lastname;
+    }
+    public ?string $middlename {
+        get {
+            return $this->middlename;
+        }
 
-    private string $firstName {
-        get {
-            return $this->firstName;
-        }
+        set(null|string $middlename) => $this->middlename = $middlename ;
     }
-    private string $lastName {
-        get {
-            return $this->lastName;
-        }
-    }
-    private string $middleName {
-        get {
-            return $this->middleName;
-        }
-    }
-    private string $email {
-        get {
-            return $this->email;
-        }
-    }
-
-    private string $address {
-        get {
-            return $this->address;
-        }
-    }
-    private string $gender {
+    public string $gender {
         get {
             return $this->gender;
         }
+        set(string $gender) => $this->gender = $gender;
     }
-    private string $extension {
+    public ?string $extension {
         get {
             return $this->extension;
         }
+        set(?string $extension) => $this->extension = $extension;
+    }
+    public string $age {
+        get {
+            return $this->age;
+        }
+        set(string $age) => $this->age = $age;
+    }
+    public string $address {
+        get {
+            return $this->address;
+        }
+        set(string $address) => $this->address = $address;
+    }
+    public string $student_id {
+        get {
+            return $this->student_id;
+        }
+        set(string $student_id) => $this->student_id = $student_id;
     }
 
-    public function __construct(string $firstName, string $lastName, string $middleName, string $email, string $address, string $gender, string $extension)
-    {
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
-        $this->middleName = $middleName;
-        $this->email = $email;
-        $this->address = $address;
+    public function __construct(
+        string $firstname,
+        string $lastname,
+        ?string $middlename,
+        string $gender,
+        ?string $extension,
+        string $age,
+        string $address,
+        string $student_id
+    ) {
+        $this->firstname = $firstname;
+        $this->lastname = $lastname;
+        $this->middlename = $middlename;
         $this->gender = $gender;
         $this->extension = $extension;
+        $this->age = $age;
+        $this->address = $address;
+        $this->student_id = $student_id;
     }
 
 }

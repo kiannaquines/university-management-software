@@ -2,18 +2,16 @@
 
 namespace App\Application\Http\Controllers;
 
-use App\Domains\Student\Entities\Student;
-use App\Domains\Student\Interface\IStudentService;
-use App\Domains\Student\Exceptions\StudentNotFoundException;
+use App\Domains\Student\Interfaces\StudentServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
-use DateTime;
+use Illuminate\Http\RedirectResponse;
 
 class StudentController extends Controller
 {
-    private $studentService;
+    private StudentServiceInterface $studentService;
 
-    public function __construct(IStudentService $studentService)
+    public function __construct(StudentServiceInterface $studentService)
     {
         $this->studentService = $studentService;
     }
@@ -21,10 +19,9 @@ class StudentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): \Illuminate\Http\RedirectResponse | View
+    public function index(): View
     {
-        // You might want to add a method to get all students in the service
-        $students = \App\Infrastructure\Models\StudentModel::all(); // Direct model access for simplicity
+        $students = $this->studentService->getAllStudents();
         return view('Student.index', compact('students'));
     }
 
@@ -39,136 +36,69 @@ class StudentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
-        try {
-            $validated = $request->validate([
-                'firstname' => 'required|string|max:255',
-                'lastname' => 'required|string|max:255',
-                'middlename' => 'nullable|string|max:255',
-                'gender' => 'required|string|in:male,female,other',
-                'extension' => 'nullable|string|max:50',
-                'age' => 'required|date',
-                'address' => 'required|string|max:255',
-                'student_id' => 'required|string|unique:student,student_id|max:50'
-            ]);
+        $validated = $request->validate([
+            'firstname' => 'required|string|max:255',
+            'lastname' => 'required|string|max:255',
+            'middlename' => 'nullable|string|max:255',
+            'gender' => 'required|string|in:Male,Female',
+            'extension' => 'nullable|string|max:50',
+            'age' => 'required|date',
+            'address' => 'required|string|max:255',
+            'student_id' => 'required|string|unique:student,student_id|max:50'
+        ]);
 
-            $student = new Student(
-                $validated['firstname'],
-                $validated['lastname'],
-                $validated['middlename'],
-                $validated['gender'],
-                $validated['extension'],
-                $validated['age'],
-                $validated['address'],
-                $validated['student_id']
-            );
+        $this->studentService->createStudent($validated);
 
-            $this->studentService->create($student);
-
-            return redirect()->route('student.index')
-                ->with('success', 'Student created successfully');
-        } catch (\Exception $e) {
-            return redirect()->back()
-                ->withInput()
-                ->with('error', $e->getMessage());
-        }
+        return redirect()->route('students.index')->with('success', 'Student created successfully.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id): \Illuminate\Http\RedirectResponse | View
+    public function show(string $id): View
     {
-        try {
-            $student = $this->studentService->findById($id);
-            return view('Student.show', compact('student'));
-        } catch (StudentNotFoundException $e) {
-            return redirect()->route('student.index')
-                ->with('error', $e->getMessage());
-        }
+        $student = $this->studentService->getStudentById($id);
+        return view('Student.show', compact('student'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id): \Illuminate\Http\RedirectResponse | View
+    public function edit(string $id): View
     {
-        try {
-            $student = $this->studentService->findById($id);
-            return view('Student.edit', compact('student'));
-        } catch (StudentNotFoundException $e) {
-            return redirect()->route('student.index')
-                ->with('error', $e->getMessage());
-        }
+        $student = $this->studentService->getStudentById($id);
+        return view('Student.edit', compact('student'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id): RedirectResponse
     {
-        try {
-            $validated = $request->validate([
-                'firstname' => 'required|string|max:255',
-                'lastname' => 'required|string|max:255',
-                'middlename' => 'nullable|string|max:255',
-                'gender' => 'required|string|in:male,female,other',
-                'extension' => 'nullable|string|max:50',
-                'age' => 'required',
-                'address' => 'required|string|max:255',
-                'student_id' => 'required|string|max:50|unique:student,student_id,' . $id
-            ]);
+        $validated = $request->validate([
+            'firstname' => 'sometimes|required|string|max:255',
+            'lastname' => 'sometimes|required|string|max:255',
+            'middlename' => 'nullable|string|max:255',
+            'gender' => 'sometimes|required|string|in:Male,Female',
+            'extension' => 'nullable|string|max:50',
+            'age' => 'sometimes|required|date',
+            'address' => 'sometimes|required|string|max:255',
+            'student_id' => 'sometimes|required|string|max:50|unique:student,student_id,' . $id
+        ]);
 
-            $student = new Student(
-                (int)$id,
-                $validated['firstname'],
-                $validated['lastname'],
-                $validated['middlename'],
-                $validated['gender'],
-                $validated['extension'],
-                $validated['age'],
-                $validated['address'],
-                $validated['student_id']
-            );
+        $this->studentService->updateStudent($id, $validated);
 
-            $this->studentService->update($student);
-
-            return redirect()->route('student.index')
-                ->with('success', 'Student updated successfully');
-        } catch (\Exception $e) {
-            return redirect()->back()
-                ->withInput()
-                ->with('error', $e->getMessage());
-        }
-    }
-
-    /**
-     * Confirm removal of the specified resource from storage.
-     */
-    public function confirm(string $id): \Illuminate\Http\RedirectResponse | View
-    {
-        try {
-            $student = $this->studentService->findById($id);
-            return view('Student.confirm', compact('student'));
-        } catch (StudentNotFoundException $e) {
-            return redirect()->route('student.index')
-                ->with('error', $e->getMessage());
-        }
+        return redirect()->route('students.index')->with('success', 'Student updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id): RedirectResponse
     {
-        try {
-            $this->studentService->delete((int)$id);
-            return redirect()->route('student.index')
-                ->with('success', 'Student deleted successfully');
-        } catch (StudentNotFoundException $e) {
-            return redirect()->route('student.index')
-                ->with('error', $e->getMessage());
-        }
+        $this->studentService->deleteStudent($id);
+        return redirect()->route('students.index')->with('success', 'Student deleted successfully.');
     }
 }
