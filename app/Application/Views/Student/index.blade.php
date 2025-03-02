@@ -3,43 +3,7 @@
 @section('title', 'Student List')
 
 @section('css')
-    <style>
-        .student-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
 
-        .student-table th,
-        .student-table td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .student-table th {
-            background-color: #f4f4f4;
-        }
-
-        .student-table tr:hover {
-            background-color: #f9f9f9;
-        }
-
-        .actions a {
-            margin-right: 10px;
-            text-decoration: none;
-        }
-
-        .success-message {
-            color: green;
-            margin: 10px 0;
-        }
-
-        .error-message {
-            color: red;
-            margin: 10px 0;
-        }
-    </style>
 @endsection
 
 @section('content')
@@ -58,47 +22,51 @@
     @endif
 
     @if ($students->isEmpty())
-        <p>No students found.</p>
+        <p class="text-gray-500">No students found.</p>
     @else
-        <table class="student-table">
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Student ID</th>
-                <th>Name</th>
-                <th>Gender</th>
-                <th>Age</th>
-                <th>Address</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach ($students as $student)
-                <tr>
-                    <td>{{ $student->id }}</td>
-                    <td>{{ $student->student_id }}</td>
-                    <td>
-                        {{ $student->firstname }}
-                        {{ $student->middlename ? $student->middlename . ' ' : '' }}
-                        {{ $student->lastname }}
-                        {{ $student->extension ? $student->extension : '' }}
-                    </td>
-                    <td>{{ ucfirst($student->gender) }}</td>
-                    <td>{{ $student->age}}</td>
-                    <td>{{ $student->address }}</td>
-                    <td class="actions">
-                        <a href="{{ route('student.show', $student->id) }}">View</a>
-                        <a href="{{ route('student.edit', $student->id) }}">Edit</a>
-                        <a href="{{ route('student.confirm', $student->id) }}">Delete</a>
-                    </td>
+        <!-- Tailwind Table -->
+        <div class="overflow-x-auto">
+            <table class="table-auto w-full border-collapse border border-gray-300 text-left text-sm">
+                <thead>
+                <tr class="bg-gray-100">
+                    <th class="border-b border-gray-300 px-4 py-2">ID</th>
+                    <th class="border-b border-gray-300 px-4 py-2">Student ID</th>
+                    <th class="border-b border-gray-300 px-4 py-2">Name</th>
+                    <th class="border-b border-gray-300 px-4 py-2">Gender</th>
+                    <th class="border-b border-gray-300 px-4 py-2">Age</th>
+                    <th class="border-b border-gray-300 px-4 py-2">Address</th>
+                    <th class="border-b border-gray-300 px-4 py-2">Actions</th>
                 </tr>
-            @endforeach
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                @foreach ($students as $student)
+                    <tr class="hover:bg-gray-100">
+                        <td class="border-b border-gray-300 px-4 py-2">{{ $student->id }}</td>
+                        <td class="border-b border-gray-300 px-4 py-2">{{ $student->student_id }}</td>
+                        <td class="border-b border-gray-300 px-4 py-2">
+                            {{ $student->firstname }}
+                            {{ $student->middlename ? $student->middlename . ' ' : '' }}
+                            {{ $student->lastname }}
+                            {{ $student->extension ? $student->extension : '' }}
+                        </td>
+                        <td class="border-b border-gray-300 px-4 py-2">{{ ucfirst($student->gender) }}</td>
+                        <td class="border-b border-gray-300 px-4 py-2">{{ $student->age }}</td>
+                        <td class="border-b border-gray-300 px-4 py-2">{{ $student->address }}</td>
+                        <td class="border-b border-gray-300 px-4 py-2 flex space-x-2">
+                            <a href="{{ route('students.show', $student->id) }}" class="text-blue-600 hover:underline">View</a>
+                            <a href="{{ route('students.edit', $student->id) }}" class="text-yellow-600 hover:underline">Edit</a>
+                            <a href="{{ route('students.confirm', $student->id) }}" class="text-red-600 hover:underline">Delete</a>
+                        </td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
     @endif
 
+
     <div>
-        <a href="{{ route('student.create') }}" class="btn">Add New Student</a>
+        <a href="{{ route('students.create') }}" class="btn">Add New Student</a>
     </div>
 @endsection
 

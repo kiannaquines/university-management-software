@@ -5,6 +5,7 @@ namespace App\Domains\Student\Services;
 use App\Domains\Student\Entities\Student;
 use App\Domains\Student\Interfaces\StudentRepositoryInterface;
 use App\Domains\Student\Interfaces\StudentServiceInterface;
+use Illuminate\Support\Collection;
 
 class StudentService implements StudentServiceInterface
 {
@@ -34,11 +35,6 @@ class StudentService implements StudentServiceInterface
     public function getStudentById(string $id): ?Student
     {
         return $this->repository->findById($id);
-    }
-
-    public function getAllStudents(): array
-    {
-        return $this->repository->findAll();
     }
 
     public function updateStudent(string $id, array $data): void

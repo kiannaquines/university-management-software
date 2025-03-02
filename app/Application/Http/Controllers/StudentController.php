@@ -6,6 +6,7 @@ use App\Domains\Student\Interfaces\StudentServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
 
 class StudentController extends Controller
 {
@@ -21,7 +22,7 @@ class StudentController extends Controller
      */
     public function index(): View
     {
-        $students = $this->studentService->getAllStudents();
+        $students = DB::table('student')->get();
         return view('Student.index', compact('students'));
     }
 

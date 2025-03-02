@@ -10,5 +10,4 @@ interface StudentServiceInterface
     public function getStudentById(string $id): ?Student;
     public function updateStudent(string $id, array $data): void;
     public function deleteStudent(string $id): void;
-    public function getAllStudents(): ?array;
 }
