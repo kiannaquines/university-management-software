@@ -53,6 +53,11 @@ class StudentService
         $this->repository->update($updatedStudent);
     }
 
+    public function findAll(): array
+    {
+       return $this->repository->findAll();
+    }
+
     public function deleteStudent(string $id): void
     {
         $this->repository->delete($id);
