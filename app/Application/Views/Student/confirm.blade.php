@@ -12,8 +12,8 @@
         @method('DELETE')
         @csrf
         <input type="submit" class="bg-red-600 p-2 text-white rounded cursor-pointer" value="Confirm">
-        <button class="bg-blue-600 p-2 text-white
-        rounded">Cancel</button>
+        <button type="button" onclick="history.back()" class="bg-blue-600 p-2 text-white
+        rounded cursor-pointer">Cancel</button>
     </form>
 @endsection
 

@@ -83,21 +83,21 @@ class StudentController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * @throws \Exception
      */
-    public function update(Request $request, string $id): RedirectResponse
+    public function update(Request $request, string $student_id): RedirectResponse
     {
         $validated = $request->validate([
-            'firstname' => 'sometimes|required|string|max:255',
-            'lastname' => 'sometimes|required|string|max:255',
+            'firstname' => 'required|string|max:255',
+            'lastname' => 'required|string|max:255',
             'middlename' => 'nullable|string|max:255',
-            'gender' => 'sometimes|required|string|in:Male,Female',
+            'gender' => 'required|string|in:Male,Female',
             'extension' => 'nullable|string|max:50',
-            'age' => 'sometimes|required|date',
-            'address' => 'sometimes|required|string|max:255',
-            'student_id' => 'sometimes|required|string|max:50|unique:student,student_id,' . $id
+            'age' => 'required|integer|min:18|max:100',
+            'address' => 'required|string|max:255',
+            'student_id' => 'required|string|max:50'
         ]);
-
-        $this->studentService->updateStudent($id, $validated);
+        $this->studentService->updateStudent($student_id, $validated);
 
         return redirect()->route('students.index')->with('success', 'Student updated successfully.');
     }

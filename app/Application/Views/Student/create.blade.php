@@ -40,8 +40,8 @@
             <label for="extension" class="text-gray-500 text-sm">Extension</label>
             <select class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow mb-2" name="extension" id="extension">
                 <option value="">None.</option>
-                <option value="Male">Jr.</option>
-                <option value="Female">Sr.</option>
+                <option value="Jr">Jr.</option>
+                <option value="Sr">Sr.</option>
             </select>
 
             <label for="student_id" class="text-gray-500 text-sm">Student ID</label>

@@ -36,20 +36,26 @@ class StudentService
     }
 
     // TODO: Implement the update student information
+
+    /**
+     * @throws \Exception
+     */
     public function updateStudent(string $id, array $data): void
     {
+
         $student = $this->repository->findById($id);
+
         if (!$student) throw new \Exception("Student not found.");
 
         $updatedStudent = new Student(
-        $data['firstname'] ?? $student->firstname,
-        $data['lastname'] ?? $student->lastname,
-        $data['middlename'] ?? $student->middlename,
-        $data['gender'] ?? $student->gender,
-        $data['extension'] ?? $student->extension,
-        $data['age'] ?? $student->age,
-        $data['address'] ?? $student->address,
-        $data['student_id'] ?? $student->student_id,
+            firstname: $data['firstname'],
+            lastname: $data['lastname'],
+            gender: $data['gender'],
+            age: $data['age'],
+            address: $data['address'],
+            student_id: $data['student_id'],
+            middlename: $data['middlename'],
+            extension: $data['extension'],
         );
         $this->repository->update($updatedStudent);
     }
