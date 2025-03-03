@@ -5,7 +5,6 @@ namespace App\Domains\Student\Repositories;
 use App\Domains\Student\Entities\Student;
 use App\Domains\Student\Interfaces\StudentRepositoryInterface;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Collection;
 
 class StudentRepository implements StudentRepositoryInterface
 {
@@ -48,11 +47,6 @@ class StudentRepository implements StudentRepositoryInterface
         ]);
     }
 
-    public function getAllStudents(): Collection
-    {
-        return DB::table('student')->get();
-    }
-
     public function update(Student $student): void
     {
         DB::table('student')->where('student_id', $student->student_id)->update([
@@ -65,8 +59,6 @@ class StudentRepository implements StudentRepositoryInterface
             'address' => $student->address,
         ]);
     }
-
-
 
     public function delete(string $id): void
     {

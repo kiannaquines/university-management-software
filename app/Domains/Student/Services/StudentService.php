@@ -3,15 +3,13 @@
 namespace App\Domains\Student\Services;
 
 use App\Domains\Student\Entities\Student;
-use App\Domains\Student\Interfaces\StudentRepositoryInterface;
-use App\Domains\Student\Interfaces\StudentServiceInterface;
-use Illuminate\Support\Collection;
+use App\Domains\Student\Repositories\StudentRepository;
 
-class StudentService implements StudentServiceInterface
+class StudentService
 {
-    private StudentRepositoryInterface $repository;
+    private StudentRepository $repository;
 
-    public function __construct(StudentRepositoryInterface $repository)
+    public function __construct(StudentRepository $repository)
     {
         $this->repository = $repository;
     }
@@ -19,15 +17,15 @@ class StudentService implements StudentServiceInterface
     public function createStudent(array $data): Student
     {
         $student = new Student(
-        $data['firstname'],
-        $data['lastname'],
-        $data['middlename'] ?? null,
-        $data['gender'],
-        $data['extension'] ?? null,
-        $data['age'],
-        $data['address'],
-        $data['student_id']
-    );
+            $data['firstname'],
+            $data['lastname'],
+            $data['middlename'] ?? null,
+            $data['gender'],
+            $data['extension'] ?? null,
+            $data['age'],
+            $data['address'],
+            $data['student_id']
+        );
         $this->repository->save($student);
         return $student;
     }

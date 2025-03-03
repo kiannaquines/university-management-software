@@ -2,7 +2,7 @@
 
 namespace App\Application\Http\Controllers;
 
-use App\Domains\Student\Interfaces\StudentServiceInterface;
+use App\Domains\Student\Services\StudentService;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -10,9 +10,9 @@ use Illuminate\Support\Facades\DB;
 
 class StudentController extends Controller
 {
-    private StudentServiceInterface $studentService;
+    private StudentService $studentService;
 
-    public function __construct(StudentServiceInterface $studentService)
+    public function __construct(StudentService $studentService)
     {
         $this->studentService = $studentService;
     }
