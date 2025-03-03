@@ -3,7 +3,6 @@
 namespace App\Domains\Student\Entities;
 
 use DateTime;
-use DateTimeInterface;
 
 class Student
 {
@@ -52,14 +51,14 @@ class Student
         set(string $student_id) => $this->student_id = $student_id;
     }
 
-    public ?DateTimeInterface $created_at {
+    public ?DateTime $created_at {
         get => $this->created_at;
-        set(?DateTimeInterface $created_at) => $this->created_at = $created_at;
+        set(?DateTime $created_at) => $this->created_at = $created_at;
     }
 
-    public ?DateTimeInterface $updated_at {
+    public ?DateTime $updated_at {
         get => $this->updated_at;
-        set(?DateTimeInterface $updated_at) => $this->updated_at = $updated_at;
+        set(?DateTime $updated_at) => $this->updated_at = $updated_at;
     }
 
     public string $fullname {
@@ -69,12 +68,12 @@ class Student
     public function __construct(
         string $firstname,
         string $lastname,
-        ?string $middlename,
         string $gender,
-        ?string $extension,
         string $age,
         string $address,
         string $student_id,
+        ?string $middlename,
+        ?string $extension,
         ?string $id = null,
         ?string $created_at = null,
         ?string $updated_at = null
@@ -89,18 +88,12 @@ class Student
         $this->student_id = $student_id;
         $this->id = $id;
 
-        $this->created_at = $created_at
-            ? DateTime::createFromFormat('Y-m-d H:i:s', $created_at)
-            : null;
-        if ($created_at && $this->created_at === false) {
-            throw new \InvalidArgumentException("Invalid created_at format: $created_at");
+        if ($created_at) {
+            $this->created_at = DateTime::createFromFormat('Y-m-d H:i:s', $created_at);
         }
 
-        $this->updated_at = $updated_at
-            ? DateTime::createFromFormat('Y-m-d H:i:s', $updated_at)
-            : null;
-        if ($updated_at && $this->updated_at === false) {
-            throw new \InvalidArgumentException("Invalid updated_at format: $updated_at");
+        if ($updated_at) {
+            $this->updated_at = DateTime::createFromFormat('Y-m-d H:i:s', $updated_at);
         }
     }
 
@@ -116,8 +109,9 @@ class Student
             'age' => $this->age,
             'address' => $this->address,
             'student_id' => $this->student_id,
-            'created_at' => $this->created_at?->format('Y-m-d H:i:s'),
-            'updated_at' => $this->updated_at?->format('Y-m-d H:i:s'),
+            'created_at' => $this->created_at?->format('F j, Y g:i a'),
+            'updated_at' => $this->updated_at?->format('F j, Y g:i a'),
+            'fullname' => $this->fullname,
         ];
     }
 }

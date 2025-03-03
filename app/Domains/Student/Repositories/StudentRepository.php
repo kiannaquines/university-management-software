@@ -11,31 +11,41 @@ class StudentRepository implements StudentRepositoryInterface
     public function findById(string $id): ?Student
     {
         $record = DB::table('student')->where('student_id', $id)->first();
+
         if (!$record) return null;
 
         return new Student(
-            $record->firstname, $record->lastname, $record->middlename,
-            $record->gender, $record->extension, $record->age,
-            $record->address, $record->student_id,
+            $record->firstname,
+            $record->lastname,
+            $record->gender,
+            $record->age,
+            $record->address,
+            $record->student_id,
+            $record->middlename,
+            $record->extension,
+            $record->id,
+            $record->created_at,
+            $record->updated_at,
         );
     }
 
     public function findAll(): array
     {
         $records = DB::table('student')
-            ->select('firstname', 'lastname', 'middlename', 'gender', 'extension', 'age', 'address', 'student_id')
+            ->select('firstname', 'lastname', 'middlename', 'gender', 'extension', 'age', 'address', 'student_id','created_at')
             ->orderBy('lastname')
             ->get();
 
         return $records->map(fn($record) => new Student(
             $record->firstname,
             $record->lastname,
-            $record->middlename,
             $record->gender,
-            $record->extension,
             $record->age,
             $record->address,
-            $record->student_id
+            $record->student_id,
+            $record->middlename,
+            $record->extension,
+            $record->created_at,
         ))->toArray();
     }
 
@@ -44,12 +54,14 @@ class StudentRepository implements StudentRepositoryInterface
         DB::table('student')->insert([
             'firstname' => $student->firstname,
             'lastname' => $student->lastname,
-            'middlename' => $student->middlename,
             'gender' => $student->gender,
+            'middlename' => $student->middlename,
             'extension' => $student->extension,
             'age' => $student->age,
             'address' => $student->address,
             'student_id' => $student->student_id,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
     }
 

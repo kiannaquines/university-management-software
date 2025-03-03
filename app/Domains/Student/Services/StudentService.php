@@ -19,12 +19,12 @@ class StudentService
         $student = new Student(
             $data['firstname'],
             $data['lastname'],
-            $data['middlename'] ?? null,
             $data['gender'],
-            $data['extension'] ?? null,
             $data['age'],
             $data['address'],
-            $data['student_id']
+            $data['student_id'],
+            $data['middlename'],
+            $data['extension'],
         );
         $this->repository->save($student);
         return $student;
