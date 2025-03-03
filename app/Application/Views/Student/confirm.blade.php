@@ -8,10 +8,13 @@
 
 @section('content')
     <h1 class="mb-2">Are you sure you want to remove <b>{{ $student->fullname }}</b>?</h1>
-    <a href="{{ route('students.destroy', $student->student_id) }}" class="bg-red-600 p-2 text-white
-    rounded">Remove</a>
-    <a href="{{ route('students.index') }}" class="bg-blue-600 p-2 text-white
-    rounded">Cancel</a>
+    <form method="POST" action="{{ route('students.destroy', $student->student_id) }}">
+        @method('DELETE')
+        @csrf
+        <input type="submit" class="bg-red-600 p-2 text-white rounded cursor-pointer" value="Confirm">
+        <button class="bg-blue-600 p-2 text-white
+        rounded">Cancel</button>
+    </form>
 @endsection
 
 @section('js')

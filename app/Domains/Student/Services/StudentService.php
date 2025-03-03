@@ -58,8 +58,6 @@ class StudentService
     {
        return $this->repository->findAll();
     }
-
-    // TODO: Implement the remove student information
     public function deleteStudent(string $id): void
     {
         $this->repository->delete($id);
