@@ -48,7 +48,7 @@ class StudentService
         $data['extension'] ?? $student->extension,
         $data['age'] ?? $student->age,
         $data['address'] ?? $student->address,
-        $data['student_id'] ?? $student->student_id
+        $data['student_id'] ?? $student->student_id,
         );
         $this->repository->update($updatedStudent);
     }

@@ -16,7 +16,7 @@ class StudentRepository implements StudentRepositoryInterface
         return new Student(
             $record->firstname, $record->lastname, $record->middlename,
             $record->gender, $record->extension, $record->age,
-            $record->address, $record->student_id
+            $record->address, $record->student_id,
         );
     }
 
