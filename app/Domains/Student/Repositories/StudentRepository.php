@@ -75,6 +75,7 @@ class StudentRepository implements StudentRepositoryInterface
             'extension' => $student->extension,
             'age' => $student->age,
             'address' => $student->address,
+            'updated_at' => now(),
         ]);
     }
 

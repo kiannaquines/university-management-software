@@ -7,7 +7,7 @@
 
 @section('content')
     <div class="student-information mb-2">
-        <h1>Show Student</h1>
+        <h3 class="text-2xl font-semibold mb-2" >Show Student</h3>
         <h4>Firstname: {{ $student->fullname  }}</h4>
         <h4>Address: {{ $student->address  }}</h4>
         <h4>Gender: {{ $student->gender  }}</h4>
