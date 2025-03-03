@@ -7,7 +7,11 @@
 @endsection
 
 @section('content')
-    <h1>Student List</h1>
+
+    <div class="flex justify-between items-center mb-2">
+        <h1 class="text-3xl font-semibold mb-2">Student List</h1>
+        <a href="{{ route('students.create') }}" class="btn text-white bg-blue-600 rounded p-2">Add New Student</a>
+    </div>
 
     @if (session('success'))
         <div class="success-message">
@@ -24,7 +28,6 @@
     @if ($students->isEmpty())
         <p class="text-gray-500">No students found.</p>
     @else
-        <!-- Tailwind Table -->
         <div class="overflow-x-auto">
             <table class="table-auto w-full border-collapse border border-gray-300 text-left text-sm">
                 <thead>
@@ -63,16 +66,10 @@
             </table>
         </div>
     @endif
-
-
-    <div>
-        <a href="{{ route('students.create') }}" class="btn">Add New Student</a>
-    </div>
 @endsection
 
 @section('js')
-    {{-- js goes here --}}
     <script>
-        // You could add JavaScript here for additional interactivity if needed
+        {{-- js goes here --}}
     </script>
 @endsection

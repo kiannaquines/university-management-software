@@ -8,7 +8,7 @@
     @yield('css')
 </head>
 <body>
-    <main class="flex justify-center items-center p-10">
+    <main class="p-10">
         @yield('content')
     </main>
     @yield('js')

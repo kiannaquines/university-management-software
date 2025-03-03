@@ -10,7 +10,7 @@
     <form method="POST" action="{{ route('students.store') }}">
         @method('POST')
         @csrf
-        <h3 class="text-2xl font-semibold text-center mb-2">Create Students Information</h3>
+        <h3 class="text-2xl font-semibold mb-2">Create Students Information</h3>
         <div class="w-full max-w-sm min-w-[200px]">
             <label for="firstname" class="text-gray-500 text-sm">Firstname</label>
             <input class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow mb-2" name="firstname" id="firstname" placeholder="Firstname...">
