@@ -22,15 +22,21 @@ class StudentRepository implements StudentRepositoryInterface
 
     public function findAll(): array
     {
-        $records = DB::table('student')->get();
+        $records = DB::table('student')
+            ->select('firstname', 'lastname', 'middlename', 'gender', 'extension', 'age', 'address', 'student_id')
+            ->orderBy('lastname')
+            ->get();
 
-        return $records->map(function ($record) {
-            return new Student(
-                $record->firstname, $record->lastname, $record->middlename,
-                $record->gender, $record->extension, $record->age,
-                $record->address, $record->student_id
-            );
-        })->toArray();
+        return $records->map(fn($record) => new Student(
+            $record->firstname,
+            $record->lastname,
+            $record->middlename,
+            $record->gender,
+            $record->extension,
+            $record->age,
+            $record->address,
+            $record->student_id
+        ))->toArray();
     }
 
     public function save(Student $student): void

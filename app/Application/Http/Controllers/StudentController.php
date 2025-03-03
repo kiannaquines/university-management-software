@@ -22,8 +22,8 @@ class StudentController extends Controller
      */
     public function index(): View
     {
-        $students = DB::table('student')->get();
-        return view('Student.index', compact('students'));
+        $students = $this->studentService->getAllStudents();
+        return view('Student.index',compact('students'));
     }
 
     /**
@@ -45,7 +45,7 @@ class StudentController extends Controller
             'middlename' => 'nullable|string|max:255',
             'gender' => 'required|string|in:Male,Female',
             'extension' => 'nullable|string|max:50',
-            'age' => 'required|date',
+            'age' => 'required|integer|min:18|max:100',
             'address' => 'required|string|max:255',
             'student_id' => 'required|string|unique:student,student_id|max:50'
         ]);

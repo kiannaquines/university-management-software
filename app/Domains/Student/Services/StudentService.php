@@ -53,7 +53,7 @@ class StudentService
         $this->repository->update($updatedStudent);
     }
 
-    public function findAll(): array
+    public function getAllStudents() : array
     {
        return $this->repository->findAll();
     }
