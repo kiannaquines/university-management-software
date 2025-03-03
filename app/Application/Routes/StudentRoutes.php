@@ -10,5 +10,6 @@ Route::prefix('students')->group(function () {
     Route::get('/{student_id}', [StudentController::class, 'show'])->name('students.show');
     Route::get('/{student_id}/edit', [StudentController::class, 'edit'])->name('students.edit');
     Route::put('/{student_id}', [StudentController::class, 'update'])->name('students.update');
+    Route::get('/{student_id}/confirm', [StudentController::class, 'confirm'])->name('students.confirm');
     Route::delete('/{student_id}', [StudentController::class, 'destroy'])->name('students.destroy');
 });

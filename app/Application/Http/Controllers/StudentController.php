@@ -75,6 +75,12 @@ class StudentController extends Controller
         return view('Student.edit', compact('student'));
     }
 
+    public function confirm(string $id): View
+    {
+        $student = $this->studentService->getStudentById($id);
+        return view('Student.confirm', compact('student'));
+    }
+
     /**
      * Update the specified resource in storage.
      */
