@@ -50,9 +50,11 @@ class StudentController extends Controller
             'student_id' => 'required|string|unique:student,student_id|max:50'
         ]);
 
-        $this->studentService->createStudent($validated);
+        if ($this->studentService->createStudent($validated)) {
+            return redirect()->route('students.index')->with('success', 'Student created successfully.');
+        }
 
-        return redirect()->route('students.index')->with('success', 'Student created successfully.');
+        return redirect()->route('students.index')->with('error', 'Student could not be created.');
     }
 
     /**

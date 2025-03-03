@@ -5,52 +5,35 @@ namespace App\Domains\Student\Entities;
 class Student
 {
     public string $firstname {
-        get {
-            return $this->firstname;
-        }
+        get => $this->firstname;
         set(string $firstname) => $this->firstname = $firstname;
     }
     public string $lastname {
-        get {
-            return $this->lastname;
-        }
+        get => $this->lastname;
         set(string $lastname) => $this->lastname = $lastname;
     }
     public ?string $middlename {
-        get {
-            return $this->middlename;
-        }
-
+        get => $this->middlename;
         set(null|string $middlename) => $this->middlename = $middlename ;
     }
     public string $gender {
-        get {
-            return $this->gender;
-        }
+        get => $this->gender;
         set(string $gender) => $this->gender = $gender;
     }
     public ?string $extension {
-        get {
-            return $this->extension;
-        }
+        get =>  $this->extension;
         set(?string $extension) => $this->extension = $extension;
     }
     public string $age {
-        get {
-            return $this->age;
-        }
+        get => $this->age;
         set(string $age) => $this->age = $age;
     }
     public string $address {
-        get {
-            return $this->address;
-        }
+        get => $this->address;
         set(string $address) => $this->address = $address;
     }
     public string $student_id {
-        get {
-            return $this->student_id;
-        }
+        get => $this->student_id;
         set(string $student_id) => $this->student_id = $student_id;
     }
 
