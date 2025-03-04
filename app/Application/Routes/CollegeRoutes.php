@@ -3,8 +3,17 @@
 use App\Application\Http\Controllers\CollegeController;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('colleges')->name('colleges')->group(function(){
-    Route::get('/',[CollegeController::class, 'index']);
-    Route::get('/colleges',[CollegeController::class, 'create']);
-    Route::get('/colleges/{college_id}',[CollegeController::class, 'show']);
+Route::prefix('colleges')->group(function () {
+    Route::resource('/', CollegeController::class)->parameter('', 'college_id')->names([
+        'index'   => 'colleges.index',
+        'create'  => 'colleges.create',
+        'store'   => 'colleges.store',
+        'show'    => 'colleges.show',
+        'edit'    => 'colleges.edit',
+        'update'  => 'colleges.update',
+        'destroy' => 'colleges.destroy',
+    ]);
+
+    Route::get('/{college_id}/confirmation', [CollegeController::class, 'confirm'])
+        ->name('colleges.confirm');
 });
