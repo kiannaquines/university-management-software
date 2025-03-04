@@ -17,7 +17,7 @@ class CollegeService
     public function createCollege(array $data): College
     {
         $college = new College(
-            collegeName: $data['lastname'],
+            collegeName: $data['college'],
         );
         $this->repository->save($college);
         return $college;
@@ -28,20 +28,18 @@ class CollegeService
         return $this->repository->findById($id);
     }
 
-    // TODO: Implement the update student information
 
     /**
      * @throws \Exception
      */
     public function updateCollege(string $id, array $data): void
     {
-
-        $student = $this->repository->findById($id);
-
-        if (!$student) throw new \Exception("College not found.");
+        $college = $this->repository->findById($id);
+        if (!$college) throw new \Exception("College not found.");
 
         $updateCollege = new College(
-            collegeName: $data['firstname'],
+            collegeName: $data['college'],
+            collegeId: $data['collegeId'],
         );
         $this->repository->update($updateCollege);
     }
