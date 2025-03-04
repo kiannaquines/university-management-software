@@ -25,20 +25,20 @@ class College {
     }
 
     public function __construct(
-        ?string $collegeId = null,
         string $collegeName,
-        ?string $created_at = null,
-        ?string $updated_at = null
+        ?string $collegeId = null,
+        ?string $createdAt = null,
+        ?string $updatedAt = null
     ) {
         $this->collegeId = $collegeId;
         $this->collegeName = $collegeName;
 
-        if ($this->createdAt) {
-            $this->createdAt = DateTime::createFromFormat('Y-m-d H:i:s', $created_at);
+        if ($createdAt) {
+            $this->createdAt = DateTime::createFromFormat('Y-m-d H:i:s', $createdAt);
         }
 
-        if ($this->updatedAt) {
-            $this->updatedAt = DateTime::createFromFormat('Y-m-d H:i:s', $updated_at);
+        if ($updatedAt) {
+            $this->updatedAt = DateTime::createFromFormat('Y-m-d H:i:s', $updatedAt);
         }
     }
 

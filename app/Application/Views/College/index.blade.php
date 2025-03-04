@@ -34,14 +34,23 @@
             </tr>
             </thead>
             <tbody>
+            @forelse($colleges as $college)
                 <tr class="hover:bg-gray-100">
-                    <td class="border-b border-gray-300 px-4 py-2">College of Engineering</td>
+                    <td class="border-b border-gray-300 px-4 py-2">{{ $college->collegeName }}</td>
                     <td class="border-b border-gray-300 px-4 py-2 flex space-x-2">
-                        <a href="#" class="text-blue-600 hover:underline">View</a>
-                        <a href="#" class="text-yellow-600 hover:underline">Edit</a>
-                        <a href="#" class="text-red-600 hover:underline">Delete</a>
+                        <a href="{{ route('colleges.show', $college->collegeId) }}" class="text-blue-600
+                        hover:underline">View</a>
+                        <a href="{{ route('colleges.edit', $college->collegeId) }}" class="text-yellow-600
+                        hover:underline">Edit</a>
+                        <a href="{{ route('colleges.confirm', $college->collegeId) }}" class="text-red-600
+                        hover:underline">Delete</a>
                     </td>
                 </tr>
+            @empty
+                <tr class="p-2">
+                    <td colspan="2" class="text-center p-2">No College Found</td>
+                </tr>
+            @endforelse
             </tbody>
         </table>
     </div>
