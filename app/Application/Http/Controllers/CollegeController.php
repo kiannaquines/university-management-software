@@ -11,7 +11,7 @@ class CollegeController extends Controller
     private CollegeService $collegeService;
     public function __construct(CollegeService $collegeService)
     {
-        $this->$collegeService = $collegeService;
+        $this->collegeService = $collegeService;
     }
     /**
      * Display a listing of the resource.

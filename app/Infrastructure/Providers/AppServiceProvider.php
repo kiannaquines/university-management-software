@@ -2,10 +2,11 @@
 
 namespace App\Infrastructure\Providers;
 
+use App\Domains\College\Interfaces\CollegeRepositoryInterface;
+use App\Domains\College\Repositories\CollegeRepository;
 use App\Domains\Student\Interfaces\StudentRepositoryInterface;
-use App\Domains\Student\Interfaces\StudentServiceInterface;
 use App\Domains\Student\Repositories\StudentRepository;
-use App\Domains\Student\Services\StudentService;
+
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -15,7 +16,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(StudentServiceInterface::class, StudentService::class);
+        $this->app->bind(CollegeRepositoryInterface::class, CollegeRepository::class);
         $this->app->bind(StudentRepositoryInterface::class, StudentRepository::class);
     }
 
