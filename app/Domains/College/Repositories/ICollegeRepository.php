@@ -3,10 +3,11 @@
 namespace App\Domains\College\Repositories;
 
 use App\Domains\College\Entities\College;
-use App\Domains\College\Interfaces\CollegeRepositoryInterface;
+use App\Domains\Core\Repository\IRepositoryBase;
 use Illuminate\Support\Facades\DB;
-
-class CollegeRepository implements CollegeRepositoryInterface {
+use Illuminate\Database\QueryException;
+use Exception;
+class ICollegeRepository implements IRepositoryBase {
 
     public function findById(string $id): ?College
     {
@@ -32,24 +33,33 @@ class CollegeRepository implements CollegeRepositoryInterface {
          })->toArray();
     }
 
-    public function save(College $college): void
+    public function save(object $entity): void
     {
         DB::table('college')->insert([
-            'college' => $college->collegeName,
+            'college' => $entity->collegeName,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
     }
 
-    public function update(College $college): void
+    /**
+     * @throws Exception
+     */
+    public function update(object $entity): void
     {
-       DB::table('college')->where('id', $college->collegeId)->update([
-           'college' => $college->collegeName,
-           'updated_at' => now(),
-       ]);
+        try {
+            DB::table('colleges')
+                ->where('id', $entity->collegeId)
+                ->update([
+                    'college' => $entity->collegeName,
+                    'updated_at' => now(),
+                ]);
+        } catch (QueryException $e) {
+            throw new Exception("Error updating college: " . $e->getMessage());
+        }
     }
 
-    public function delete(string $id): void
+    public function delete($id): void
     {
         DB::table('college')->where('id', $id)->delete();
     }

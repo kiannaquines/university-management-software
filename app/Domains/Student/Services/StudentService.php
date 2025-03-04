@@ -3,13 +3,13 @@
 namespace App\Domains\Student\Services;
 
 use App\Domains\Student\Entities\Student;
-use App\Domains\Student\Repositories\StudentRepository;
+use App\Domains\Student\Repositories\IStudentRepository;
 
 class StudentService
 {
-    private StudentRepository $repository;
+    private IStudentRepository $repository;
 
-    public function __construct(StudentRepository $repository)
+    public function __construct(IStudentRepository $repository)
     {
         $this->repository = $repository;
     }

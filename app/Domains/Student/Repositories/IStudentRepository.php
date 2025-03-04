@@ -2,11 +2,11 @@
 
 namespace App\Domains\Student\Repositories;
 
+use App\Domains\Core\Repository\IRepositoryBase;
 use App\Domains\Student\Entities\Student;
-use App\Domains\Student\Interfaces\StudentRepositoryInterface;
 use Illuminate\Support\Facades\DB;
 
-class StudentRepository implements StudentRepositoryInterface
+class IStudentRepository implements IRepositoryBase
 {
     public function findById(string $id): ?Student
     {
@@ -59,37 +59,37 @@ class StudentRepository implements StudentRepositoryInterface
         ))->toArray();
     }
 
-    public function save(Student $student): void
+    public function save(object $entity): void
     {
         DB::table('student')->insert([
-            'firstname' => $student->firstname,
-            'lastname' => $student->lastname,
-            'gender' => $student->gender,
-            'middlename' => $student->middlename,
-            'extension' => $student->extension,
-            'age' => $student->age,
-            'address' => $student->address,
-            'student_id' => $student->student_id,
+            'firstname' => $entity->firstname,
+            'lastname' => $entity->lastname,
+            'gender' => $entity->gender,
+            'middlename' => $entity->middlename,
+            'extension' => $entity->extension,
+            'age' => $entity->age,
+            'address' => $entity->address,
+            'student_id' => $entity->student_id,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
     }
 
-    public function update(Student $student): void
+    public function update(object $entity): void
     {
-        DB::table('student')->where('student_id', $student->student_id)->update([
-            'firstname' => $student->firstname,
-            'lastname' => $student->lastname,
-            'middlename' => $student->middlename,
-            'gender' => $student->gender,
-            'extension' => $student->extension,
-            'age' => $student->age,
-            'address' => $student->address,
+        DB::table('student')->where('student_id', $entity->student_id)->update([
+            'firstname' => $entity->firstname,
+            'lastname' => $entity->lastname,
+            'middlename' => $entity->middlename,
+            'gender' => $entity->gender,
+            'extension' => $entity->extension,
+            'age' => $entity->age,
+            'address' => $entity->address,
             'updated_at' => now(),
         ]);
     }
 
-    public function delete(string $id): void
+    public function delete($id): void
     {
         DB::table('student')->where('student_id', $id)->delete();
     }
