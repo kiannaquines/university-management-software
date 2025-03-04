@@ -32,7 +32,17 @@ class StudentRepository implements StudentRepositoryInterface
     public function findAll(): array
     {
         $records = DB::table('student')
-            ->select('firstname', 'lastname', 'middlename', 'gender', 'extension', 'age', 'address', 'student_id','created_at')
+            ->select(
+                'firstname',
+                'lastname',
+                'middlename',
+                'gender',
+                'extension',
+                'age',
+                'address',
+                'student_id',
+                'created_at'
+            )
             ->orderBy('lastname')
             ->get();
 

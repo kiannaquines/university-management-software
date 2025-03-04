@@ -2,11 +2,17 @@
 
 namespace App\Application\Http\Controllers;
 
+use App\Domains\College\Services\CollegeService;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class CollegeController extends Controller
 {
+    private CollegeService $collegeService;
+    public function __construct(CollegeService $collegeService)
+    {
+        $this->$collegeService = $collegeService;
+    }
     /**
      * Display a listing of the resource.
      */
@@ -18,9 +24,9 @@ class CollegeController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create() : View
     {
-        //
+        return View('College.create');
     }
 
     /**
