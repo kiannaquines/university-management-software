@@ -6,6 +6,7 @@ use App\Domains\College\Services\CollegeService;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use Exception;
 
 class CollegeController extends Controller
 {
@@ -14,8 +15,10 @@ class CollegeController extends Controller
     {
         $this->collegeService = $collegeService;
     }
+
     /**
      * Display a listing of the resource.
+     * @throws Exception
      */
     public function index() : View
     {
@@ -33,6 +36,7 @@ class CollegeController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * @throws Exception
      */
     public function store(Request $request) : RedirectResponse
     {
@@ -45,6 +49,7 @@ class CollegeController extends Controller
 
     /**
      * Display the specified resource.
+     * @throws Exception
      */
     public function show(string $id) : View
     {
@@ -54,6 +59,7 @@ class CollegeController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     * @throws Exception
      */
     public function edit(string $id) : View
     {
@@ -63,16 +69,16 @@ class CollegeController extends Controller
 
     /**
      * Update the specified resource in storage.
-     * @throws \Exception
+     * @throws Exception
      */
     public function update(Request $request, string $id) : RedirectResponse
     {
         $validated = $request->validate([
-            'collegeId' => 'required|int|max:50',
+            'id' => 'required|int|max:50',
             'college' => 'required|string|max:255',
         ]);
 
-        $this->collegeService->updateCollege($id, $validated);
+        $this->collegeService->updateCollege($validated, $id);
         return redirect()->route('colleges.index')->with('success', 'College updated successfully.');
     }
 
@@ -88,6 +94,7 @@ class CollegeController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     * @throws Exception
      */
     public function destroy(string $id) : RedirectResponse
     {

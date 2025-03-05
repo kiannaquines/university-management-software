@@ -2,54 +2,65 @@
 
 namespace App\Domains\College\Services;
 
-use App\Domains\College\Entities\College;
-use App\Domains\College\Repositories\ICollegeRepository;
+use App\Domains\College\Repositories\CollegeRepository;
+use Exception;
 
 class CollegeService
 {
-    private ICollegeRepository $repository;
+    protected CollegeRepository $collegeRepository;
 
-    public function __construct(ICollegeRepository $repository)
+    public function __construct(CollegeRepository $collegeRepository)
     {
-        $this->repository = $repository;
+        $this->collegeRepository = $collegeRepository;
     }
-
-    public function createCollege(array $data): College
-    {
-        $college = new College(
-            collegeName: $data['college'],
-        );
-        $this->repository->save($college);
-        return $college;
-    }
-
-    public function getCollegeById(string $id): ?College
-    {
-        return $this->repository->findById($id);
-    }
-
 
     /**
-     * @throws \Exception
+     * @param string $id
+     * @return object
+     * @throws Exception
      */
-    public function updateCollege(string $id, array $data): void
+    public function getCollegeById(string $id) : object
     {
-        $college = $this->repository->findById($id);
-        if (!$college) throw new \Exception("College not found.");
-
-        $updateCollege = new College(
-            collegeName: $data['college'],
-            collegeId: $data['collegeId'],
-        );
-        $this->repository->update($updateCollege);
+        return $this->collegeRepository->findCollegeById($id);
     }
 
-    public function getAllColleges() : array
+    /**
+     * @param array $data
+     * @param string $id
+     * @return bool
+     * @throws Exception
+     */
+    public function updateCollege(array $data, string $id): bool
     {
-        return $this->repository->findAll();
+        return $this->collegeRepository->updateCollegeById($data, $id);
     }
-    public function deleteCollege(string $id): void
+
+    /**
+     * @param array $data
+     * @return bool
+     * @throws Exception
+     */
+    public function createCollege(array $data): bool
     {
-        $this->repository->delete($id);
+        return $this->collegeRepository->createNewCollege($data);
+    }
+
+    /**
+     * @param string $id
+     * @return bool
+     * @throws Exception
+     */
+    public function deleteCollege(string $id): bool
+    {
+        return $this->collegeRepository->deleteCollegeById($id);
+    }
+
+    /**
+     * @return array
+     * @throws Exception
+     */
+    public function getAllColleges(): array
+    {
+        return $this->collegeRepository->getAllCollege();
     }
 }

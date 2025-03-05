@@ -7,8 +7,8 @@
 @endsection
 
 @section('content')
-    <h1 class="mb-2">Are you sure you want to remove <b>{{ $college->collegeName }}</b>?</h1>
-    <form method="POST" action="{{ route('colleges.destroy', $college->collegeId) }}">
+    <h1 class="mb-2">Are you sure you want to remove <b>{{ $college->college }}</b>?</h1>
+    <form method="POST" action="{{ route('colleges.destroy', $college->id) }}">
         @method('DELETE')
         @csrf
         <input type="submit" class="bg-red-600 p-2 text-white rounded cursor-pointer" value="Confirm">

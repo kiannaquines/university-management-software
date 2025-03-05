@@ -96,22 +96,4 @@ class Student
             $this->updated_at = DateTime::createFromFormat('Y-m-d H:i:s', $updated_at);
         }
     }
-
-    public function toArray(): array
-    {
-        return [
-            'id' => $this->id,
-            'firstname' => $this->firstname,
-            'lastname' => $this->lastname,
-            'middlename' => $this->middlename,
-            'gender' => $this->gender,
-            'extension' => $this->extension,
-            'age' => $this->age,
-            'address' => $this->address,
-            'student_id' => $this->student_id,
-            'created_at' => $this->created_at?->format('F j, Y g:i a'),
-            'updated_at' => $this->updated_at?->format('F j, Y g:i a'),
-            'fullname' => $this->fullname,
-        ];
-    }
 }

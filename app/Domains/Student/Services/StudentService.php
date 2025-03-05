@@ -3,69 +3,51 @@
 namespace App\Domains\Student\Services;
 
 use App\Domains\Student\Entities\Student;
-use App\Domains\Student\Repositories\IStudentRepository;
+use App\Domains\Student\Repositories\StudentRepository;
+use Exception;
 
 class StudentService
 {
-    private IStudentRepository $repository;
+    private StudentRepository $studentRepository;
 
-    public function __construct(IStudentRepository $repository)
+    public function __construct(StudentRepository $studentRepository)
     {
-        $this->repository = $repository;
+        $this->studentRepository = $studentRepository;
     }
-
-    public function createStudent(array $data): Student
-    {
-        $student = new Student(
-            $data['firstname'],
-            $data['lastname'],
-            $data['gender'],
-            $data['age'],
-            $data['address'],
-            $data['student_id'],
-            $data['middlename'],
-            $data['extension'],
-        );
-        $this->repository->save($student);
-        return $student;
-    }
-
-    public function getStudentById(string $id): ?Student
-    {
-        return $this->repository->findById($id);
-    }
-
-    // TODO: Implement the update student information
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
-    public function updateStudent(string $id, array $data): void
-    {
-
-        $student = $this->repository->findById($id);
-
-        if (!$student) throw new \Exception("Student not found.");
-
-        $updatedStudent = new Student(
-            firstname: $data['firstname'],
-            lastname: $data['lastname'],
-            gender: $data['gender'],
-            age: $data['age'],
-            address: $data['address'],
-            student_id: $data['student_id'],
-            middlename: $data['middlename'],
-            extension: $data['extension'],
-        );
-        $this->repository->update($updatedStudent);
+    public function getStudentById(string $id) : object {
+        return $this->studentRepository->findStudentById($id);
     }
 
-    public function getAllStudents() : array
-    {
-       return $this->repository->findAll();
+    /**
+     * @throws Exception
+     */
+    public function getStudents() : array {
+        return $this->studentRepository->getAllStudent();
     }
-    public function deleteStudent(string $id): void
-    {
-        $this->repository->delete($id);
+
+    /**
+     * @throws Exception
+     */
+    public function createStudent(array $student) : bool {
+        return $this->studentRepository->create($student);
     }
+
+    /**
+     * @throws Exception
+     */
+    public function updateStudent(array $student, string $id) : bool {
+        return $this->studentRepository->update($student, $id);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function deleteStudent(string $id) : bool {
+        return $this->studentRepository->deleteStudentById($id);
+    }
+
 }

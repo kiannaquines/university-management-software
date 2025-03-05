@@ -5,49 +5,49 @@ namespace App\Domains\College\Entities;
 use DateTime;
 
 class College {
-    public ?string $collegeId {
-        get => $this->collegeId;
-        set(?string $collegeId) => $this->collegeId = $collegeId;
+    public ?string $id {
+        get => $this->id;
+        set(?string $id) => $this->id = $id;
     }
-    public string $collegeName {
-        get => $this->collegeName;
-        set(?string $collegeName) => $this->collegeName = $collegeName;
-    }
-
-    public ?DateTime $createdAt {
-        get => $this->createdAt;
-        set(?DateTime $createdAt) => $this->createdAt = $createdAt;
+    public string $college {
+        get => $this->college;
+        set(?string $college) => $this->college = $college;
     }
 
-    public ?DateTime $updatedAt {
-        get => $this->updatedAt;
-        set(?DateTime $updatedAt) => $this->updatedAt = $updatedAt;
+    public ?DateTime $created_at {
+        get => $this->created_at;
+        set(?DateTime $created_at) => $this->created_at = $created_at;
+    }
+
+    public ?DateTime $updated_at {
+        get => $this->updated_at;
+        set(?DateTime $updated_at) => $this->updated_at = $updated_at;
     }
 
     public function __construct(
-        string $collegeName,
-        ?string $collegeId = null,
-        ?string $createdAt = null,
-        ?string $updatedAt = null
+        string $college,
+        ?string $id = null,
+        ?string $created_at = null,
+        ?string $updated_at = null
     ) {
-        $this->collegeId = $collegeId;
-        $this->collegeName = $collegeName;
+        $this->id = $id;
+        $this->college = $college;
 
-        if ($createdAt) {
-            $this->createdAt = DateTime::createFromFormat('Y-m-d H:i:s', $createdAt);
+        if ($created_at) {
+            $this->created_at = DateTime::createFromFormat('Y-m-d H:i:s', $created_at);
         }
 
-        if ($updatedAt) {
-            $this->updatedAt = DateTime::createFromFormat('Y-m-d H:i:s', $updatedAt);
+        if ($updated_at) {
+            $this->updated_at = DateTime::createFromFormat('Y-m-d H:i:s', $updated_at);
         }
     }
 
     public function toArray() : array {
         return [
-            'collegeId' => $this->collegeId,
-            'collegeName' => $this->collegeName,
-            'createdAt' => $this->createdAt,
-            'updatedAt' => $this->updatedAt
+            'id' => $this->id,
+            'college' => $this->college,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at
         ];
     }
 }
