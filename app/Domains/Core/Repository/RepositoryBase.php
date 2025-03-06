@@ -6,7 +6,7 @@ use App\Domains\Core\Interface\IRepositoryBase;
 use Illuminate\Support\Facades\DB;
 use Exception;
 use ReflectionClass;
-use ReflectionProperty;
+use Carbon\Carbon;
 
 class RepositoryBase implements IRepositoryBase {
 
@@ -69,6 +69,7 @@ class RepositoryBase implements IRepositoryBase {
     public function update(array $data, string $id): bool
     {
         try {
+            $data['updated_at'] = Carbon::now();
             $updated = DB::table($this->tableName)->where('id', $id)->update($data);
 
             if (!$updated) {
@@ -89,6 +90,8 @@ class RepositoryBase implements IRepositoryBase {
     public function create(array $data): bool
     {
         try {
+            $data['created_at'] = Carbon::now();
+            $data['updated_at'] = Carbon::now();
             return DB::table($this->tableName)->insert($data);
         } catch (Exception $e) {
             throw new Exception("Error creating {$this->entityClass}: " . $e->getMessage());

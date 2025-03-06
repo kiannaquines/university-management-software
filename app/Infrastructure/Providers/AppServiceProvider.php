@@ -6,7 +6,6 @@ use App\Domains\College\Interfaces\ICollegeRepository;
 use App\Domains\Core\Interface\IRepositoryBase;
 use App\Domains\Student\Interfaces\IStudentRepository;
 
-use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider

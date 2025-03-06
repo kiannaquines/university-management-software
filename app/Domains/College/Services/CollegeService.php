@@ -4,6 +4,7 @@ namespace App\Domains\College\Services;
 
 use App\Domains\College\Repositories\CollegeRepository;
 use Exception;
+use Illuminate\Http\Request;
 
 class CollegeService
 {
@@ -36,13 +37,16 @@ class CollegeService
     }
 
     /**
-     * @param array $data
+     * @param Request $data
      * @return bool
      * @throws Exception
      */
-    public function createCollege(array $data): bool
+    public function createCollege(Request $request): bool
     {
-        return $this->collegeRepository->createNewCollege($data);
+        $validated = $request->validate([
+            'college' => 'required|string|max:255',
+        ]);
+        return $this->collegeRepository->createNewCollege($validated);
     }
 
     /**

@@ -3,8 +3,8 @@
 namespace App\Application\Http\Controllers;
 
 use App\Domains\College\Services\CollegeService;
-use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Exception;
 
@@ -35,15 +35,13 @@ class CollegeController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @param Request $request
+     * @return RedirectResponse
      * @throws Exception
      */
     public function store(Request $request) : RedirectResponse
     {
-        $validated = $request->validate([
-            'college' => 'required|string|max:255',
-        ]);
-        $this->collegeService->createCollege($validated);
+        $this->collegeService->createCollege($request);
         return redirect()->route('colleges.index')->with('success', 'College created successfully.');
     }
 

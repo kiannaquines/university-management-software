@@ -36,22 +36,12 @@ class StudentController extends Controller
      */
     public function store(Request $request) : RedirectResponse
     {
-        $validated = $request->validate([
-            'firstname' => 'required|string|max:255',
-            'lastname' => 'required|string|max:255',
-            'middlename' => 'nullable|string|max:255',
-            'gender' => 'required|string|in:Male,Female',
-            'extension' => 'nullable|string|max:50',
-            'age' => 'required|integer|min:18|max:100',
-            'address' => 'required|string|max:255',
-            'student_id' => 'required|string|unique:student,student_id|max:50'
-        ]);
-
-        $result = $this->studentService->createStudent($validated);
+        $result = $this->studentService->createStudent($request);
 
         if ($result) {
             return redirect()->route('students.index')->with('success', 'Student created successfully.');
         }
+
         return redirect()->route('students.index')->with('error', 'Student created failed.');
     }
 
