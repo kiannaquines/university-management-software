@@ -1,4 +1,4 @@
-@extends('Layout.layout')
+@extends('Layouts.layout')
 
 @section('title', 'College List')
 

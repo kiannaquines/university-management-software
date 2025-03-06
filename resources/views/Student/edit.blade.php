@@ -1,4 +1,4 @@
-@extends('Layout.layout')
+@extends('Layouts.layout')
 
 @section('title', 'Edit Student Information')
 
@@ -43,13 +43,15 @@
                       placeholder="Address">{{ $student->address }}</textarea>
 
             <label for="gender" class="text-gray-500 text-sm">Gender</label>
-            <select class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow mb-2" name="gender" id="gender">
+            <select class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow mb-2"
+                    name="gender" id="gender">
                 <option value="Male" @if($student->gender === 'Male') selected @endif>Male</option>
                 <option value="Female" @if($student->gender === 'Female') selected @endif>Female</option>
             </select>
 
             <label for="extension" class="text-gray-500 text-sm">Extension</label>
-            <select class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow mb-2" name="extension" id="extension">
+            <select class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow mb-2"
+                    name="extension" id="extension">
                 <option value="" @if($student->extension === 'None') selected @endif>None.</option>
                 <option value="Jr" @if($student->extension === 'Jr') selected @endif>Jr.</option>
                 <option value="Sr" @if($student->extension === 'Sr') selected @endif>Sr.</option>
@@ -60,7 +62,8 @@
             border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none
             focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow mb-2" name="student_id"
                    id="student_id" value="{{ $student->student_id }}" placeholder="Student ID" readonly>
-            <input type="submit" class="w-full bg-blue-600 text-white p-2 rounded-md text-sm cursor-pointer mt-3" value="Submit">
+            <input type="submit" class="w-full bg-blue-600 text-white p-2 rounded-md text-sm cursor-pointer mt-3"
+                   value="Submit">
         </div>
     </form>
 @endsection
