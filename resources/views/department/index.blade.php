@@ -40,9 +40,6 @@
                             @forelse($departments as $department)
                                 <tr class="hover:bg-gray-100">
                                     <td class="border-b border-gray-300 px-4 py-2">{{ $department->department }}</td>
-                                    <td class="border-b border-gray-300 px-4 py-2">{{ ucfirst($department->gender) }}</td>
-                                    <td class="border-b border-gray-300 px-4 py-2">{{ $department->age }}</td>
-                                    <td class="border-b border-gray-300 px-4 py-2">{{ $department->address }}</td>
                                     <td class="border-b border-gray-300 px-4 py-2">{{ $department->created_at?->format('F
                                     j, Y
                                      g:i

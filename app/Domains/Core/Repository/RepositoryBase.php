@@ -128,7 +128,6 @@ class RepositoryBase implements IRepositoryBase {
     {
         try {
             $query = DB::table($this->tableName);
-
             if ($keyword) {
                 $query->where('college', 'LIKE', "%{$keyword}%");
             }

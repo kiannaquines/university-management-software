@@ -41,13 +41,4 @@ class College {
             $this->updated_at = DateTime::createFromFormat('Y-m-d H:i:s', $updated_at);
         }
     }
-
-    public function toArray() : array {
-        return [
-            'id' => $this->id,
-            'college' => $this->college,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at
-        ];
-    }
 }
