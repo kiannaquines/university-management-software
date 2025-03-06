@@ -23,12 +23,12 @@ class StudentController extends Controller
     public function index(): View
     {
         $students = $this->studentService->getStudents();
-        return view('Student.index',compact('students'));
+        return view('student.index',compact('students'));
     }
 
     public function create(): View
     {
-        return view('Student.create');
+        return view('student.create');
     }
 
     /**
@@ -39,10 +39,10 @@ class StudentController extends Controller
         $result = $this->studentService->createStudent($request);
 
         if ($result) {
-            return redirect()->route('students.index')->with('success', 'Student created successfully.');
+            return redirect()->route('students.index')->with('success', 'student created successfully.');
         }
 
-        return redirect()->route('students.index')->with('error', 'Student created failed.');
+        return redirect()->route('students.index')->with('error', 'student created failed.');
     }
 
     /**
@@ -51,7 +51,7 @@ class StudentController extends Controller
     public function show(string $id): View
     {
         $student = $this->studentService->getStudentById($id);
-        return view('Student.show',compact('student'));
+        return view('student.show',compact('student'));
     }
 
     /**
@@ -60,7 +60,7 @@ class StudentController extends Controller
     public function edit(string $id): View
     {
         $student = $this->studentService->getStudentById($id);
-        return view('Student.edit',compact('student'));
+        return view('student.edit',compact('student'));
     }
 
     /**
@@ -69,7 +69,7 @@ class StudentController extends Controller
     public function confirm(string $id): string
     {
         $student = $this->studentService->getStudentById($id);
-        return view('Student.confirm',compact('student'));
+        return view('student.confirm',compact('student'));
     }
 
     /**
@@ -87,7 +87,7 @@ class StudentController extends Controller
             'address' => 'required|string|max:255',
         ]);
         $this->studentService->updateStudent($validated, $id);
-        return redirect()->route('students.index')->with('success', 'Student updated successfully.');
+        return redirect()->route('students.index')->with('success', 'student updated successfully.');
     }
 
     /**
@@ -98,8 +98,8 @@ class StudentController extends Controller
         $result = $this->studentService->deleteStudent($id);
 
         if ($result) {
-            return redirect()->route('students.index')->with('success', 'Student deleted successfully.');
+            return redirect()->route('students.index')->with('success', 'student deleted successfully.');
         }
-        return redirect()->route('students.index')->with('error', 'Student deleted failed.');
+        return redirect()->route('students.index')->with('error', 'student deleted failed.');
     }
 }

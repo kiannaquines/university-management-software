@@ -23,7 +23,7 @@ class CollegeController extends Controller
     public function index() : View
     {
         $colleges = $this->collegeService->getAllColleges();
-        return view('College.index',compact('colleges'));
+        return view('college.index',compact('colleges'));
     }
 
     /**
@@ -31,7 +31,7 @@ class CollegeController extends Controller
      */
     public function create() : View
     {
-        return View('College.create');
+        return View('college.create');
     }
 
     /**
@@ -42,7 +42,7 @@ class CollegeController extends Controller
     public function store(Request $request) : RedirectResponse
     {
         $this->collegeService->createCollege($request);
-        return redirect()->route('colleges.index')->with('success', 'College created successfully.');
+        return redirect()->route('colleges.index')->with('success', 'college created successfully.');
     }
 
     /**
@@ -52,7 +52,7 @@ class CollegeController extends Controller
     public function show(string $id) : View
     {
         $college = $this->collegeService->getCollegeById($id);
-        return View('College.show', compact('college'));
+        return View('college.show', compact('college'));
     }
 
     /**
@@ -62,7 +62,7 @@ class CollegeController extends Controller
     public function edit(string $id) : View
     {
         $college = $this->collegeService->getCollegeById($id);
-        return View('College.edit',compact('college'));
+        return View('college.edit',compact('college'));
     }
 
     /**
@@ -77,7 +77,7 @@ class CollegeController extends Controller
         ]);
 
         $this->collegeService->updateCollege($validated, $id);
-        return redirect()->route('colleges.index')->with('success', 'College updated successfully.');
+        return redirect()->route('colleges.index')->with('success', 'college updated successfully.');
     }
 
     /**
@@ -86,7 +86,7 @@ class CollegeController extends Controller
     public function confirm(string $id) : View
     {
         $college = $this->collegeService->getCollegeById($id);
-        return View('College.confirm', compact('college'));
+        return View('college.confirm', compact('college'));
     }
 
 
@@ -97,6 +97,6 @@ class CollegeController extends Controller
     public function destroy(string $id) : RedirectResponse
     {
         $this->collegeService->deleteCollege($id);
-        return redirect()->route('colleges.index')->with('success', 'College deleted successfully.');
+        return redirect()->route('colleges.index')->with('success', 'college deleted successfully.');
     }
 }
