@@ -10,22 +10,16 @@ class Department {
         ?string $id = null,
         ?string $department_description = null,
         ?string $college_id = null,
-        ?DateTime $created_at = null,
-        ?DateTime $updated_at = null
+        ?string $created_at = null,
+        ?string $updated_at = null
     )
     {
         $this->id = $id;
         $this->department = $department;
         $this->college_id = $college_id;
         $this->department_description = $department_description;
-
-        if ($created_at) {
-            $this->created_at = DateTime::createFromFormat('Y-m-d H:i:s', $created_at);
-        }
-
-        if($updated_at) {
-            $this->updated_at = DateTime::createFromFormat('Y-m-d H:i:s', $updated_at);
-        }
+        $this->created_at = DateTime::createFromFormat('Y-m-d H:i:s', $created_at);
+        $this->updated_at = DateTime::createFromFormat('Y-m-d H:i:s', $updated_at);
     }
 
     public ?string $id {
