@@ -2,10 +2,9 @@
 
 namespace App\Domains\Student\Services;
 
-use App\Domains\Student\Entities\Student;
 use App\Domains\Student\Repositories\StudentRepository;
-use Exception;
 use Illuminate\Http\Request;
+use Exception;
 
 class StudentService
 {
@@ -42,7 +41,7 @@ class StudentService
             'extension' => 'nullable|string|max:50',
             'age' => 'required|integer|min:18|max:100',
             'address' => 'required|string|max:255',
-            'student_id' => 'required|string|unique:student,student_id|max:50'
+            'student_id' => 'required|string|unique:students,student_id|max:50'
         ]);
         return $this->studentRepository->create($validated);
     }

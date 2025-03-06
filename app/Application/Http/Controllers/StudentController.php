@@ -39,7 +39,7 @@ class StudentController extends Controller
         $result = $this->studentService->createStudent($request);
 
         if ($result) {
-            return redirect()->route('students.index')->with('success', 'student created successfully.');
+            return redirect()->route('students.index')->with('success', 'Student created successfully.');
         }
 
         return redirect()->route('students.index')->with('error', 'student created failed.');
@@ -87,7 +87,7 @@ class StudentController extends Controller
             'address' => 'required|string|max:255',
         ]);
         $this->studentService->updateStudent($validated, $id);
-        return redirect()->route('students.index')->with('success', 'student updated successfully.');
+        return redirect()->route('students.index')->with('success', 'Student updated successfully.');
     }
 
     /**
@@ -98,7 +98,7 @@ class StudentController extends Controller
         $result = $this->studentService->deleteStudent($id);
 
         if ($result) {
-            return redirect()->route('students.index')->with('success', 'student deleted successfully.');
+            return redirect()->route('students.index')->with('success', 'Student deleted successfully.');
         }
         return redirect()->route('students.index')->with('error', 'student deleted failed.');
     }

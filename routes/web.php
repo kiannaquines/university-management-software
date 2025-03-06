@@ -15,6 +15,8 @@ Route::middleware(['auth','verified'])->group(function () {
     require base_path('app/Application/Routes/CollegeRoutes.php');
     require base_path('app/Application/Routes/StudentRoutes.php');
     require base_path('app/Application/Routes/ProfileRoutes.php');
+    require base_path('app/Application/Routes/InstructorRoutes.php');
+    require base_path('app/Application/Routes/DepartmentRoutes.php');
 });
 
 require base_path('app/Application/Routes/AuthRoutes.php');

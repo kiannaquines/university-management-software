@@ -12,7 +12,7 @@ class CollegeRepository extends RepositoryBase implements ICollegeRepository {
      */
     public function __construct()
     {
-        parent::__construct('college', 'App\Domains\College\Entities\College');
+        parent::__construct('colleges', 'App\Domains\College\Entities\College');
     }
 
     /**

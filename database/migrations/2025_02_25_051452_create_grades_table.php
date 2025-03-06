@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('year', function (Blueprint $table) {
-            $table->id('id')->primary();
-            $table->string('year');
-            $table->string('year_description');
+        Schema::create('grades', function (Blueprint $table) {
+            $table->id()->primary();
+            $table->foreignId('year_parent_id');
+            $table->foreignId('student_parent_id');
+            $table->float('grade')->nullable(false);
+            $table->foreignId('semester_parent_id');
             $table->timestamps();
         });
     }
@@ -24,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('year');
+        Schema::dropIfExists('grade');
     }
 };

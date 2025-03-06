@@ -23,6 +23,14 @@
                     <x-nav-link :href="route('colleges.index')" :active="request()->routeIs('colleges.index')">
                         {{ __('Colleges') }}
                     </x-nav-link>
+
+                    <x-nav-link :href="route('instructor.index')" :active="request()->routeIs('instructor.index')">
+                        {{ __('Instructor') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('department.index')" :active="request()->routeIs('department.index')">
+                        {{ __('Department') }}
+                    </x-nav-link>
                 </div>
             </div>
 

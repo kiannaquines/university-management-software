@@ -11,7 +11,7 @@ class StudentRepository extends RepositoryBase implements IStudentRepository
 
     public function __construct()
     {
-        parent::__construct('student', 'App\Domains\Student\Entities\Student');
+        parent::__construct('students', 'App\Domains\Student\Entities\Student');
     }
     /**
      * @return array
@@ -34,7 +34,7 @@ class StudentRepository extends RepositoryBase implements IStudentRepository
 
     /**
      * @param array $studentData
-     * @return bool$studentData
+     * @return bool
      * @throws Exception
      */
     public function createNewStudent(array $studentData): bool

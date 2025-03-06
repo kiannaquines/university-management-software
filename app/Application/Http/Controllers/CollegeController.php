@@ -42,7 +42,7 @@ class CollegeController extends Controller
     public function store(Request $request) : RedirectResponse
     {
         $this->collegeService->createCollege($request);
-        return redirect()->route('colleges.index')->with('success', 'college created successfully.');
+        return redirect()->route('colleges.index')->with('success', 'College created successfully.');
     }
 
     /**
@@ -77,7 +77,7 @@ class CollegeController extends Controller
         ]);
 
         $this->collegeService->updateCollege($validated, $id);
-        return redirect()->route('colleges.index')->with('success', 'college updated successfully.');
+        return redirect()->route('colleges.index')->with('success', 'College updated successfully.');
     }
 
     /**
@@ -97,6 +97,6 @@ class CollegeController extends Controller
     public function destroy(string $id) : RedirectResponse
     {
         $this->collegeService->deleteCollege($id);
-        return redirect()->route('colleges.index')->with('success', 'college deleted successfully.');
+        return redirect()->route('colleges.index')->with('success', 'College deleted successfully.');
     }
 }
