@@ -3,8 +3,9 @@
 namespace App\Helpers;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\HtmlString;
 
-abstract class DBFormBuilder
+abstract class DBFormBuilder extends FormAttribute
 {
     /**
      * @var string
@@ -81,7 +82,6 @@ abstract class DBFormBuilder
     /**
      * @param string $type
      * @param string $name
-     * @param ?string $class
      * @param ?string $label
      * @param array $attributes
      * @return $this
@@ -203,17 +203,6 @@ static
         $form .= "<input type='button' class='{$this->cancelButtonClass}' value='Back' onclick='window.history.back(); return false;'/>";
         $form .= "</form>";
 
-        return $form;
-    }
-
-    protected function formatAttributes($attributes): string
-    {
-        $formatted = '';
-        foreach ($attributes as $key => $value) {
-            if (!in_array($key, ['options', 'selected'])) {
-                $formatted .= "{$key}='{$value}' ";
-            }
-        }
-        return trim($formatted);
+        return new HtmlString($form);
     }
 }
