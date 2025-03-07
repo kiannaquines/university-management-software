@@ -3,8 +3,10 @@
 namespace App\Domains\Department\Services;
 
 use App\Domains\Department\Repositories\DepartmentRepository;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Exception;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class DepartmentService {
 
@@ -21,18 +23,19 @@ class DepartmentService {
     }
 
     /**
+     * @return LengthAwarePaginator
      * @throws Exception
      */
-    public function getDepartments() : array {
+    public function getDepartments() : LengthAwarePaginator {
         return $this->departmentRepository->getAllDepartment();
     }
 
     /**
      * @param Request $request
-     * @return bool
+     * @return Model
      * @throws Exception
      */
-    public function createDepartment(Request $request) : bool {
+    public function createDepartment(Request $request) : Model {
         $validated = $request->validate([
            'department' => 'required|string|max:255',
            'department_description' => 'required|string|max:255',

@@ -5,19 +5,20 @@ namespace App\Domains\Student\Repositories;
 use App\Domains\Core\Repository\RepositoryBase;
 use App\Domains\Student\Interfaces\IStudentRepository;
 use Exception;
-
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\LengthAwarePaginator;
 class StudentRepository extends RepositoryBase implements IStudentRepository
 {
 
     public function __construct()
     {
-        parent::__construct('students', 'App\Domains\Student\Entities\Student');
+        parent::__construct('App\Infrastructure\Models\StudentModel');
     }
     /**
-     * @return array
+     * @return LengthAwarePaginator
      * @throws Exception
      */
-    public function getAllStudent() : array
+    public function getAllStudent() : LengthAwarePaginator
     {
         return $this->all();
     }
@@ -34,10 +35,10 @@ class StudentRepository extends RepositoryBase implements IStudentRepository
 
     /**
      * @param array $studentData
-     * @return bool
+     * @return Model
      * @throws Exception
      */
-    public function createNewStudent(array $studentData): bool
+    public function createNewStudent(array $studentData): Model
     {
         return $this->create($studentData);
     }

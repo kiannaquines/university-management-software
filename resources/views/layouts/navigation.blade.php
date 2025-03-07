@@ -31,11 +31,6 @@
                     <x-nav-link :href="route('department.index')" :active="request()->routeIs('department.index')">
                         {{ __('Department') }}
                     </x-nav-link>
-
-
-                    <x-nav-link :href="route('department.index')" :active="request()->routeIs('department.index')">
-                        {{ __('Student Grades') }}
-                    </x-nav-link>
                 </div>
             </div>
 

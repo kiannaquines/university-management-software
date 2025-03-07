@@ -3,6 +3,8 @@
 namespace App\Domains\Student\Services;
 
 use App\Domains\Student\Repositories\StudentRepository;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
 use Exception;
 
@@ -25,14 +27,14 @@ class StudentService
     /**
      * @throws Exception
      */
-    public function getStudents() : array {
+    public function getStudents() : LengthAwarePaginator {
         return $this->studentRepository->getAllStudent();
     }
 
     /**
      * @throws Exception
      */
-    public function createStudent(Request $request) : bool {
+    public function createStudent(Request $request) : Model {
         $validated = $request->validate([
             'firstname' => 'required|string|max:255',
             'lastname' => 'required|string|max:255',

@@ -5,12 +5,14 @@ namespace App\Domains\Department\Repositories;
 use App\Domains\Core\Repository\RepositoryBase;
 use App\Domains\Department\Interfaces\IDepartmentRepository;
 use Exception;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class DepartmentRepository extends RepositoryBase implements IDepartmentRepository {
 
     public function __construct()
     {
-        parent::__construct('departments', 'App\Domains\Department\Entities\Department');
+        parent::__construct('App\Infrastructure\Models\DepartmentModel');
     }
 
     /**
@@ -36,10 +38,10 @@ class DepartmentRepository extends RepositoryBase implements IDepartmentReposito
 
     /**
      * @param array $departmentData
-     * @return bool
+     * @return Model
      * @throws Exception
      */
-    public function createNewDepartment(array $departmentData): bool
+    public function createNewDepartment(array $departmentData): Model
     {
         return $this->create($departmentData);
     }
@@ -55,10 +57,10 @@ class DepartmentRepository extends RepositoryBase implements IDepartmentReposito
     }
 
     /**
-     * @return array
+     * @return LengthAwarePaginator
      * @throws Exception
      */
-    public function getAllDepartment(): array
+    public function getAllDepartment(): LengthAwarePaginator
     {
         return $this->all();
     }

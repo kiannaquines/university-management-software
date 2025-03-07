@@ -4,7 +4,9 @@ namespace App\Domains\Instructor\Services;
 
 use App\Domains\Instructor\Repositories\InstructorRepository;
 use Exception;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class InstructorService
 {
@@ -49,7 +51,7 @@ class InstructorService
      * @return bool
      * @throws Exception
      */
-    public function createInstructor(Request $request): bool
+    public function createInstructor(Request $request): Model
     {
         $validated = $request->validate([
             'firstname' => 'required|string|max:255',
@@ -73,10 +75,10 @@ class InstructorService
     }
 
     /**
-     * @return array
+     * @return LengthAwarePaginator
      * @throws Exception
      */
-    public function getAllInstructors(): array
+    public function getAllInstructors(): LengthAwarePaginator
     {
         return $this->instructorRepository->getAllInstructor();
     }

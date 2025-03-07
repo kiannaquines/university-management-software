@@ -1,14 +1,16 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Application\Http\Controllers\Api\ApiStudentController;
 
-Route::get('/students', [ApiStudentController::class, 'index']);
-Route::post('/students', [ApiStudentController::class, 'store']);
-Route::get('/students/{id}', [ApiStudentController::class, 'show']);
-Route::put('/students/{id}', [ApiStudentController::class, 'update']);
-Route::delete('/students/{id}', [ApiStudentController::class, 'destroy']);
+Route::prefix('students')->group(function () {
+    Route::get('/', [ApiStudentController::class, 'index']);
+    Route::post('/', [ApiStudentController::class, 'store']);
+    Route::get('/{id}', [ApiStudentController::class, 'show']);
+    Route::put('/{id}', [ApiStudentController::class, 'update']);
+    Route::delete('/{id}', [ApiStudentController::class, 'destroy']);
+})->middleware('auth:sanctum');
+
 
 
 

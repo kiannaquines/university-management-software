@@ -3,8 +3,10 @@
 namespace App\Domains\College\Services;
 
 use App\Domains\College\Repositories\CollegeRepository;
-use Exception;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Exception;
 
 class CollegeService
 {
@@ -38,10 +40,10 @@ class CollegeService
 
     /**
      * @param Request $data
-     * @return bool
+     * @return Model
      * @throws Exception
      */
-    public function createCollege(Request $request): bool
+    public function createCollege(Request $request): Model
     {
         $validated = $request->validate([
             'college' => 'required|string|max:255',
@@ -60,10 +62,10 @@ class CollegeService
     }
 
     /**
-     * @return array
+     * @return LengthAwarePaginator
      * @throws Exception
      */
-    public function getAllColleges(): array
+    public function getAllColleges(): LengthAwarePaginator
     {
         return $this->collegeRepository->getAllCollege();
     }

@@ -4,6 +4,8 @@ namespace App\Domains\College\Repositories;
 
 use App\Domains\College\Interfaces\ICollegeRepository;
 use App\Domains\Core\Repository\RepositoryBase;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Model;
 use Exception;
 
 class CollegeRepository extends RepositoryBase implements ICollegeRepository {
@@ -12,7 +14,7 @@ class CollegeRepository extends RepositoryBase implements ICollegeRepository {
      */
     public function __construct()
     {
-        parent::__construct('colleges', 'App\Domains\College\Entities\College');
+        parent::__construct('App\Infrastructure\Models\CollegeModel');
     }
 
     /**
@@ -36,10 +38,10 @@ class CollegeRepository extends RepositoryBase implements ICollegeRepository {
 
     /**
      * @param array $collegeData
-     * @return bool
+     * @return Model
      * @throws Exception
      */
-    public function createNewCollege(array $collegeData) : bool {
+    public function createNewCollege(array $collegeData) : Model {
         return $this->create($collegeData);
     }
 
@@ -53,10 +55,10 @@ class CollegeRepository extends RepositoryBase implements ICollegeRepository {
     }
 
     /**
-     * @return array
+     * @return LengthAwarePaginator
      * @throws Exception
      */
-    public function getAllCollege() : array {
+    public function getAllCollege() : LengthAwarePaginator {
         return $this->all();
     }
 }

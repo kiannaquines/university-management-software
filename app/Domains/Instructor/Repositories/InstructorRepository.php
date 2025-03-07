@@ -4,6 +4,8 @@ namespace App\Domains\Instructor\Repositories;
 
 use App\Domains\Core\Repository\RepositoryBase;
 use App\Domains\Instructor\Interfaces\IInstructor;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Exception;
 
 class InstructorRepository extends RepositoryBase implements IInstructor
@@ -11,7 +13,7 @@ class InstructorRepository extends RepositoryBase implements IInstructor
 
     public function __construct()
     {
-        parent::__construct('instructor', 'App\Domains\Instructor\Entities\Instructor');
+        parent::__construct('App\Infrastructure\Models\InstructorModel');
     }
 
     /**
@@ -37,10 +39,10 @@ class InstructorRepository extends RepositoryBase implements IInstructor
 
     /**
      * @param array $instructorData
-     * @return bool
+     * @return Model
      * @throws Exception
      */
-    public function createNewInstructor(array $instructorData): bool
+    public function createNewInstructor(array $instructorData): Model
     {
         return $this->create($instructorData);
     }
@@ -57,10 +59,10 @@ class InstructorRepository extends RepositoryBase implements IInstructor
     }
 
     /**
-     * @return array
+     * @return LengthAwarePaginator
      * @throws Exception
      */
-    public function getAllInstructor(): array
+    public function getAllInstructor(): LengthAwarePaginator
     {
         return $this->all();
     }
