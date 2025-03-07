@@ -13,4 +13,6 @@ Route::prefix('departments')->group(function(){
         'update'  => 'department.update',
         'destroy' => 'department.destroy',
     ]);
+
+    Route::get('/{department_id}/confirmation', [DepartmentController::class, 'confirm'])->name('department.confirm');
 });

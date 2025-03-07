@@ -28,17 +28,29 @@ class DepartmentService {
     }
 
     /**
+     * @param Request $request
+     * @return bool
      * @throws Exception
      */
-    public function createStudent(Request $request) : bool {
-        return $this->departmentRepository->createNewDepartment([]);
+    public function createDepartment(Request $request) : bool {
+        $validated = $request->validate([
+           'department' => 'required|string|max:255',
+           'department_description' => 'required|string|max:255',
+           'college_id' => 'required|string|max:255'
+        ]);
+        return $this->departmentRepository->createNewDepartment($validated);
     }
 
     /**
      * @throws Exception
      */
-    public function updateStudent(array $departmentData, string $id) : bool {
-        return $this->departmentRepository->update($departmentData, $id);
+    public function updateDepartment(Request $request, string $id) : bool {
+        $validated = $request->validate([
+           'department' => 'required|string|max:255',
+           'department_description' => 'required|string|max:255',
+           'college_id' => 'required|string|max:255'
+        ]);
+        return $this->departmentRepository->update($validated, $id);
     }
 
     /**

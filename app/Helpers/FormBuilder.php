@@ -2,20 +2,50 @@
 
 namespace App\Helpers;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class FormBuilder
+abstract class FormBuilder
 {
+    /**
+     * @var string
+     */
     protected string $method;
+    /**
+     * @var string
+     */
     protected string $action;
+
+    /**
+     * @var array
+     */
     protected array $fields = [];
+    /**
+     * @var string
+     */
     protected string $submitLabel = 'Submit';
+    /**
+     * @var bool
+     */
     protected bool $csrf = true;
+    /**
+     * @var array|mixed
+     */
     protected array $errors = [];
+    /**
+     * @var string
+     */
     protected string $formClass = 'max-w-7xl mx-auto sm:px-6 lg:px-8';
+    /**
+     * @var string
+     */
     protected string $inputClass = 'w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow mb-2';
+    /**
+     * @var string
+     */
     protected string $submitButtonClass = 'w-full bg-blue-600 text-white p-2 rounded-md text-sm cursor-pointer mt-3';
+    /**
+     * @var array
+     */
     protected array $model = [];
 
     public function __construct($action = '', $method = 'POST', $errors = [], ?array $model = [])
@@ -26,20 +56,33 @@ class FormBuilder
         $this->model = $model;
     }
 
+    /**
+     * @return $this
+     */
     public function disableCsrf(): static
     {
         $this->csrf = false;
         return $this;
     }
 
+    /**
+     * @param array $data
+     * @return $this
+     */
     public function setModel(array $data): static
     {
         $this->model = $data;
         return $this;
     }
 
-
-    public function addField($type, $name, $label = '', $attributes = []): static
+    /**
+     * @param string $type
+     * @param string $name
+     * @param string $label
+     * @param array $attributes
+     * @return $this
+     */
+    public function addField(string $type, string $name, string $label = '', array $attributes = []): static
     {
         if (!empty($this->model) && array_key_exists($name, $this->model) && !isset($attributes['value'])) {
             $attributes['value'] = $this->model[$name];
@@ -49,48 +92,60 @@ class FormBuilder
         return $this;
     }
 
-    public function addSelectField($name, $label, $tableName, $valueField = 'id', $textField = 'name', $attributes =
-    []): static
+    public function addSelectField(
+        string $name,
+        string $label,
+        string $tableName,
+        string $valueField = 'id',
+        string $textField = 'name',
+        array $attributes = []
+    ): static
     {
-        $options = [];
-
-        if ($tableName) {
-            $items = DB::table($tableName)->get();
-            $options = $items->pluck($textField, $valueField)->toArray();
-        }
-
-        if (!empty($this->model) && array_key_exists($name, $this->model)) {
+        $options = DB::table($tableName)->pluck($textField, $valueField)->toArray();
+        $attributes['options'] = $options;
+        if (!empty($this->model[$name])) {
             $attributes['selected'] = $this->model[$name];
         }
-
-        $attributes['options'] = $options;
         return $this->addField('select', $name, $label, $attributes);
     }
 
-    public function setSubmitLabel($label): static
+    public function setSubmitLabel(string $label): static
     {
         $this->submitLabel = $label;
         return $this;
     }
 
-    public function setFormClass($class): static
+    public function setFormClass(string $class): static
     {
         $this->formClass = $class;
         return $this;
     }
 
-    public function setSubmitButtonClass($class): static
+    public function setSubmitButtonClass(string $class): static
     {
         $this->submitButtonClass = $class;
         return $this;
     }
 
+    /**
+     * @param string $method
+     * @return string
+     */
+    public function setBaseMethod(string $method): string
+    {
+        return match ($this->method) {
+            'PUT', 'DELETE', 'PATCH', 'POST' => 'POST',
+            default => 'GET',
+        };
+    }
+
     public function render(): string
     {
-        $form = "<form action='{$this->action}' method='{$this->method}' class='{$this->formClass}'>";
+        $form = "<form action='{$this->action}' method='{$this->setBaseMethod($this->method)}' class='{$this->formClass}'>";
 
         if ($this->csrf && $this->method !== 'GET') {
             $form .= csrf_field();
+            $form .= method_field($this->method);
         }
 
         foreach ($this->fields as $field) {
@@ -148,7 +203,7 @@ class FormBuilder
     {
         $formatted = '';
         foreach ($attributes as $key => $value) {
-            if ($key !== 'options' && $key !== 'selected') {
+            if (!in_array($key, ['options', 'selected'])) {
                 $formatted .= "{$key}='{$value}' ";
             }
         }

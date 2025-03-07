@@ -10,15 +10,14 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <div class="student-information mb-2">
-                        <h4>Firstname: {{ $student->firstname  }}</h4>
-                        <h4>Address: {{ $student->address  }}</h4>
-                        <h4>Gender: {{ $student->gender  }}</h4>
-                        <h4>Student ID: {{ $student->student_id  }}</h4>
-                        <h4>Created At: {{ $student->created_at?->format('F j, Y g:i a') }}</h4>
-                        <h4>Update At: {{ $student->updated_at?->format('F j, Y g:i a') }}</h4>
+                        <h4>Department: {{ $department->department  }}</h4>
+                        <h4>Department Description: {{ $department->department_description  }}</h4>
+                        <h4>Created At: {{ $department->created_at?->format('F j, Y g:i a') }}</h4>
+                        <h4>Update At: {{ $department->updated_at?->format('F j, Y g:i a') }}</h4>
                     </div>
 
-                    <a href="{{ route('students.index')  }}" class="bg-blue-600 text-white rounded p-2 mt-2 cursor-pointer">Back</a>
+                    <a href="{{ route('department.index')  }}" class="bg-blue-600 text-white rounded p-2 mt-2
+                    cursor-pointer">Back</a>
                 </div>
             </div>
         </div>

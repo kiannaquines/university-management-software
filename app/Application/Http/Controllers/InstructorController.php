@@ -2,8 +2,8 @@
 
 namespace App\Application\Http\Controllers;
 
+use App\Domains\Instructor\Forms\CreateInstructorForm;
 use App\Domains\Instructor\Services\InstructorService;
-use App\Helpers\FormBuilder;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
@@ -41,19 +41,8 @@ class InstructorController extends Controller {
     public function create() : View {
 
         $errors = session('errors') ? session('errors')->getBag('default')->getMessages() : [];
-
-        $form = new FormBuilder(route('instructor.store'), 'POST', $errors)
-            ->addField('text', 'firstname', 'Firstname', ['placeholder' => 'Enter your firstname', 'class' => 'border-gray-300'])
-            ->addField('text', 'middlename', 'Middlename', ['placeholder' => 'Enter your middlename', 'class' => 'border-gray-300'])
-            ->addField('text', 'lastname', 'Lastname', ['placeholder' => 'Enter your lastname', 'class' => 'border-gray-300'])
-            ->addField('select', 'extension', 'Extension', ['options' => ['' => 'None', 'jr' => 'Jr.', 'sr' => 'Sr.']])
-            ->addField('text', 'employee_id', 'Employee ID', ['placeholder' => 'Enter your employee id', 'class' => 'border-gray-300'])
-            ->addSelectField('department','Department', 'departments', 'id', 'department')
-            ->setSubmitLabel('Register')
-            ->setFormClass('max-w-7xl mx-auto sm:px-6 lg:px-8')
-            ->setSubmitButtonClass('w-full bg-blue-600 text-white p-2 rounded-md text-sm cursor-pointer mt-3')
-            ->render();
-        return view('instructor.create',compact('form'));
+        $instructorForm = new CreateInstructorForm(route('instructor.store'), 'POST', $errors, old())->render();
+        return view('instructor.create',compact('instructorForm'));
     }
 
     /**
@@ -75,20 +64,14 @@ class InstructorController extends Controller {
         $instructor = $this->instructorService->getInstructorById($id);
         $errors = session('errors') ? session('errors')->getBag('default')->getMessages() : [];
 
-        $form = new FormBuilder(route('instructor.update', $id), 'POST', $errors)
-            ->setModel((array) $instructor)
-            ->addField('hidden', '_method', '', ['value' => 'PUT'])
-            ->addField('text', 'firstname', 'Firstname', ['placeholder' => 'Enter your firstname', 'class' => 'border-gray-300'])
-            ->addField('text', 'middlename', 'Middlename', ['placeholder' => 'Enter your middlename', 'class' => 'border-gray-300'])
-            ->addField('text', 'lastname', 'Lastname', ['placeholder' => 'Enter your lastname', 'class' => 'border-gray-300'])
-            ->addField('select', 'extension', 'Extension', ['options' => ['' => 'None', 'jr' => 'Jr.', 'sr' => 'Sr.']])
-            ->addField('text', 'employee_id', 'Employee ID', ['placeholder' => 'Enter your employee id', 'class' => 'border-gray-300'])
-            ->addSelectField('department', 'Department', 'departments', 'id', 'department')
-            ->setSubmitLabel('Update')
-            ->setFormClass('max-w-7xl mx-auto sm:px-6 lg:px-8')
-            ->setSubmitButtonClass('w-full bg-blue-600 text-white p-2 rounded-md text-sm cursor-pointer mt-3')
-            ->render();
-        return view('instructor.edit', compact('form'));
+        $instructorForm = new CreateInstructorForm(
+            route('instructor.update', $instructor->id),
+            'PUT',
+            $errors,
+            (array) $instructor,
+        )->render();
+
+        return view('instructor.edit', compact('instructorForm'));
     }
 
     /**

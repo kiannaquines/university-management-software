@@ -48,11 +48,11 @@
                                     j, Y
                                      g:i a') }}</td>
                                     <td class="border-b border-gray-300 px-4 py-2 flex space-x-2">
-                                        <a href="{{ route('students.show', $department->id) }}" class="text-blue-600
+                                        <a href="{{ route('department.show', $department->id) }}" class="text-blue-600
                             hover:underline">View</a>
-                                        <a href="{{ route('students.edit', $department->id) }}" class="text-yellow-600
+                                        <a href="{{ route('department.edit', $department->id) }}" class="text-yellow-600
                             hover:underline">Edit</a>
-                                        <a href="{{ route('students.confirm', $department->id)  }}" class="text-red-600
+                                        <a href="{{ route('department.confirm', $department->id)  }}" class="text-red-600
                             hover:underline">Delete</a>
                                     </td>
                                 </tr>
