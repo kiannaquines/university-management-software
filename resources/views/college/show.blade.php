@@ -15,7 +15,7 @@
                         <h4>Update At: {{ $college->updated_at?->format('F j, Y g:i a') }}</h4>
                     </div>
 
-                    <a href="{{ route('colleges.index')  }}" class="bg-blue-600 text-white rounded p-2 mt-2 cursor-pointer">Back</a>
+                    <a href="{{ route('college.index')  }}" class="bg-blue-600 text-white rounded p-2 mt-2 cursor-pointer">Back</a>
                 </div>
             </div>
         </div>

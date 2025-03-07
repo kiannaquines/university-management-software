@@ -20,7 +20,7 @@
                         {{ __('Students') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('colleges.index')" :active="request()->routeIs('colleges.index')">
+                    <x-nav-link :href="route('college.index')" :active="request()->routeIs('college.index')">
                         {{ __('Colleges') }}
                     </x-nav-link>
 

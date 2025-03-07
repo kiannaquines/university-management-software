@@ -2,6 +2,8 @@
 
 namespace App\Application\Http\Controllers;
 
+use App\Domains\College\Forms\DeleteStudentForm;
+use App\Domains\Student\Forms\StudentForm;
 use App\Domains\Student\Services\StudentService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -28,7 +30,9 @@ class StudentController extends Controller
 
     public function create(): View
     {
-        return view('student.create');
+        $errors = session('errors') ? session('errors')->getBag('default')->getMessages() : [];
+        $studentForm = new StudentForm(route('students.store'), 'POST', $errors, old())->render();
+        return view('student.create',compact('studentForm'));
     }
 
     /**
@@ -59,17 +63,22 @@ class StudentController extends Controller
      */
     public function edit(string $id): View
     {
+        $errors = session('errors') ? session('errors')->getBag('default')->getMessages() : [];
         $student = $this->studentService->getStudentById($id);
-        return view('student.edit',compact('student'));
+        $studentForm = new StudentForm(route('students.update', $student->id), 'PUT', $errors, (array) $student)
+            ->render();
+        return view('student.edit',compact('studentForm'));
     }
 
     /**
      * @throws Exception
      */
-    public function confirm(string $id): string
+    public function confirm(string $id): View
     {
         $student = $this->studentService->getStudentById($id);
-        return view('student.confirm',compact('student'));
+        $studentForm = new DeleteStudentForm(route('students.destroy', $student->id), 'DELETE', [], (array) $student)
+            ->render();
+        return view('student.confirm',compact('student', 'studentForm'));
     }
 
     /**

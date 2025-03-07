@@ -10,7 +10,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <div class="flex justify-between items-center mb-4">
-                        <a href="{{ route('colleges.create') }}" class="btn text-white bg-blue-600 rounded p-2">Add College</a>
+                        <a href="{{ route('college.create') }}" class="btn text-white bg-blue-600 rounded p-2">Add College</a>
                     </div>
 
                     @if (session('success'))
@@ -44,11 +44,11 @@
                     }}</td>
 
                                     <td class="border-b border-gray-300 px-4 py-2 flex space-x-2">
-                                        <a href="{{ route('colleges.show', $college->id) }}" class="text-blue-600
+                                        <a href="{{ route('college.show', $college->id) }}" class="text-blue-600
                         hover:underline">View</a>
-                                        <a href="{{ route('colleges.edit', $college->id) }}" class="text-yellow-600
+                                        <a href="{{ route('college.edit', $college->id) }}" class="text-yellow-600
                         hover:underline">Edit</a>
-                                        <a href="{{ route('colleges.confirm', $college->id) }}" class="text-red-600
+                                        <a href="{{ route('college.confirm', $college->id) }}" class="text-red-600
                         hover:underline">Delete</a>
                                     </td>
                                 </tr>

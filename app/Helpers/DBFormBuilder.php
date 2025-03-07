@@ -4,7 +4,7 @@ namespace App\Helpers;
 
 use Illuminate\Support\Facades\DB;
 
-abstract class FormBuilder
+abstract class DBFormBuilder
 {
     /**
      * @var string
@@ -34,7 +34,7 @@ abstract class FormBuilder
     /**
      * @var string
      */
-    protected string $formClass = 'max-w-7xl mx-auto sm:px-6 lg:px-8';
+    protected string $formClass = 'max-w-7xl mx-auto';
     /**
      * @var string
      */
@@ -43,6 +43,9 @@ abstract class FormBuilder
      * @var string
      */
     protected string $submitButtonClass = 'w-full bg-blue-600 text-white p-2 rounded-md text-sm cursor-pointer mt-3';
+
+    protected string $cancelButtonClass = 'w-full bg-red-600 text-white p-2 rounded-md text-sm cursor-pointer mt-3';
+
     /**
      * @var array
      */
@@ -78,11 +81,14 @@ abstract class FormBuilder
     /**
      * @param string $type
      * @param string $name
-     * @param string $label
+     * @param ?string $class
+     * @param ?string $label
      * @param array $attributes
      * @return $this
      */
-    public function addField(string $type, string $name, string $label = '', array $attributes = []): static
+    public function addField(string $type, string $name, ?string $label = '', array $attributes =
+    []):
+static
     {
         if (!empty($this->model) && array_key_exists($name, $this->model) && !isset($attributes['value'])) {
             $attributes['value'] = $this->model[$name];
@@ -98,7 +104,7 @@ abstract class FormBuilder
         string $tableName,
         string $valueField = 'id',
         string $textField = 'name',
-        array $attributes = []
+        ?array $attributes = []
     ): static
     {
         $options = DB::table($tableName)->pluck($textField, $valueField)->toArray();
@@ -173,7 +179,7 @@ abstract class FormBuilder
                     break;
                 case 'checkbox':
                     $checked = isset($field['attributes']['checked']) ? "checked" : "";
-                    $form .= "<input type='checkbox' name='{$field['name']}' id='{$field['name']}' class='mr-2' {$attrs} {$checked}>";
+                    $form .= "<input type='checkbox' name='{$field['name']}' id='{$field['name']}' class='rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500' {$attrs} {$checked}>";
                     $form .= "<label for='{$field['name']}'>{$field['label']}</label>";
                     break;
                 default:
@@ -194,6 +200,7 @@ abstract class FormBuilder
         }
 
         $form .= "<input type='submit' class='{$this->submitButtonClass}' value='{$this->submitLabel}'/>";
+        $form .= "<input type='button' class='{$this->cancelButtonClass}' value='Back' onclick='window.history.back(); return false;'/>";
         $form .= "</form>";
 
         return $form;

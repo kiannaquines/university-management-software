@@ -10,7 +10,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <h1 class="mb-2">Are you sure you want to remove <b>{{ $college->college }}</b>?</h1>
-                    <form method="POST" action="{{ route('colleges.destroy', $college->id) }}">
+                    <form method="POST" action="{{ route('college.destroy', $college->id) }}">
                         @method('DELETE')
                         @csrf
                         <input type="submit" class="bg-red-600 p-2 text-white rounded cursor-pointer" value="Confirm">

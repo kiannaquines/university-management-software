@@ -2,6 +2,8 @@
 
 namespace App\Application\Http\Controllers;
 
+use App\Domains\College\Forms\CreateCollegeForm;
+use App\Domains\College\Forms\UpdateCollegeForm;
 use App\Domains\College\Services\CollegeService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -31,7 +33,14 @@ class CollegeController extends Controller
      */
     public function create() : View
     {
-        return View('college.create');
+        $errors = session('errors') ? session('errors')->getBag('default')->getMessages() : [];
+
+        $collegeForm = new CreateCollegeForm(
+            action: route('college.store'),
+            errors: $errors,
+            model: old()
+        )->render();
+        return View('college.create',compact('collegeForm'));
     }
 
     /**
@@ -42,7 +51,7 @@ class CollegeController extends Controller
     public function store(Request $request) : RedirectResponse
     {
         $this->collegeService->createCollege($request);
-        return redirect()->route('colleges.index')->with('success', 'College created successfully.');
+        return redirect()->route('college.index')->with('success', 'College created successfully.');
     }
 
     /**
@@ -61,8 +70,15 @@ class CollegeController extends Controller
      */
     public function edit(string $id) : View
     {
+        $errors = session('errors') ? session('errors')->getBag('default')->getMessages() : [];
         $college = $this->collegeService->getCollegeById($id);
-        return View('college.edit',compact('college'));
+        $collegeForm = new UpdateCollegeForm(
+            route('college.update', $id),
+            'PUT',
+            $errors,
+            (array) $college,
+        )->render();
+        return View('college.edit',compact('collegeForm'));
     }
 
     /**
@@ -76,16 +92,24 @@ class CollegeController extends Controller
             'college' => 'required|string|max:255',
         ]);
 
-        $this->collegeService->updateCollege($validated, $id);
-        return redirect()->route('colleges.index')->with('success', 'College updated successfully.');
+        $result = $this->collegeService->updateCollege($validated, $id);
+
+        if ($result){
+            return redirect()->route('college.index')->with('success', 'College updated successfully.');
+        }
+        return redirect()->route('college.index')->with('error', 'College could not be updated.');
     }
 
     /**
      * Confirm removal of the specified resource from storage.
+     * @throws Exception
      */
-    public function confirm(string $id) : View
+    public function confirm(string $id) : View|RedirectResponse
     {
         $college = $this->collegeService->getCollegeById($id);
+        if (!$college){
+            return redirect()->route('college.index')->with('error', 'College could not be found.');
+        }
         return View('college.confirm', compact('college'));
     }
 
@@ -96,7 +120,11 @@ class CollegeController extends Controller
      */
     public function destroy(string $id) : RedirectResponse
     {
-        $this->collegeService->deleteCollege($id);
-        return redirect()->route('colleges.index')->with('success', 'College deleted successfully.');
+        $result = $this->collegeService->deleteCollege($id);
+
+        if ($result) {
+            return redirect()->route('college.index')->with('success', 'College deleted successfully.');
+        }
+        return redirect()->route('college.index')->with('error', 'College could not be deleted.');
     }
 }

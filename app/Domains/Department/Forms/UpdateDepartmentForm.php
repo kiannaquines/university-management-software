@@ -2,9 +2,9 @@
 
 namespace App\Domains\Department\Forms;
 
-use App\Helpers\FormBuilder;
+use App\Helpers\DBFormBuilder;
 
-class UpdateDepartmentForm extends FormBuilder
+class UpdateDepartmentForm extends DBFormBuilder
 {
     public function __construct(string $action = '', string $method = 'POST', array $errors = [], ?array $model = [])
     {

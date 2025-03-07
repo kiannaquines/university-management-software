@@ -10,14 +10,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <h1 class="mb-2">Are you sure you want to remove <b>{{ $student->fullname }}</b>?</h1>
-                    <form method="POST" action="{{ route('students.destroy', $student->id) }}">
-                        @method('DELETE')
-                        @csrf
-                        <input type="submit" class="bg-red-600 p-2 text-white rounded cursor-pointer" value="Confirm">
-                        <button type="button" onclick="history.back()" class="bg-blue-600 p-2 text-white
-        rounded cursor-pointer">Cancel
-                        </button>
-                    </form>
+                    {!! $studentForm !!}
                 </div>
             </div>
         </div>

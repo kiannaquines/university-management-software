@@ -2,9 +2,9 @@
 
 namespace App\Domains\Instructor\Forms;
 
-use App\Helpers\FormBuilder;
+use App\Helpers\DBFormBuilder;
 
-class CreateInstructorForm extends FormBuilder
+class CreateInstructorForm extends DBFormBuilder
 {
     public function __construct($action = '', $method = 'POST', $errors = [], ?array $model = [])
     {
