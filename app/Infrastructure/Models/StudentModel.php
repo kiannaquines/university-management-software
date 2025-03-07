@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class StudentModel extends Model
 {
-    protected  $table = 'student';
+    protected  $table = 'students';
     protected $fillable = [
         'firstname',
         'lastname',
@@ -17,4 +17,5 @@ class StudentModel extends Model
         'address',
         'student_id',
     ];
+    protected $primaryKey = 'id';
 }

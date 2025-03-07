@@ -20,3 +20,6 @@ Route::middleware(['auth','verified'])->group(function () {
 });
 
 require base_path('app/Application/Routes/AuthRoutes.php');
+
+
+
