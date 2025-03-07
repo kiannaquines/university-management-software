@@ -2,57 +2,24 @@
 
 namespace App\Helpers;
 
-use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\HtmlString;
 
 abstract class DBFormBuilder extends FormAttribute
 {
-    /**
-     * @var string
-     */
     protected string $method;
-    /**
-     * @var string
-     */
     protected string $action;
-
-    /**
-     * @var array
-     */
     protected array $fields = [];
-    /**
-     * @var string
-     */
     protected string $submitLabel = 'Submit';
-    /**
-     * @var bool
-     */
     protected bool $csrf = true;
-    /**
-     * @var array|mixed
-     */
     protected array $errors = [];
-    /**
-     * @var string
-     */
     protected string $formClass = 'max-w-7xl mx-auto';
-    /**
-     * @var string
-     */
     protected string $inputClass = 'w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow mb-2';
-    /**
-     * @var string
-     */
     protected string $submitButtonClass = 'w-full bg-blue-600 text-white p-2 rounded-md text-sm cursor-pointer mt-3';
-
     protected string $cancelButtonClass = 'w-full bg-red-600 text-white p-2 rounded-md text-sm cursor-pointer mt-3';
+    protected ?Model $model = null;
 
-    /**
-     * @var array
-     */
-    protected array $model = [];
-
-    public function __construct($action = '', $method = 'POST', $errors = [], ?array $model = [])
+    public function __construct($action = '', $method = 'POST', $errors = [], ?Model $model = null)
     {
         $this->action = $action;
         $this->method = strtoupper($method);
@@ -60,58 +27,37 @@ abstract class DBFormBuilder extends FormAttribute
         $this->model = $model;
     }
 
-    /**
-     * @return $this
-     */
     public function disableCsrf(): static
     {
         $this->csrf = false;
         return $this;
     }
 
-    /**
-     * @param array $data
-     * @return $this
-     */
-    public function setModel(array $data): static
+    public function setModel(Model $model): static
     {
-        $this->model = $data;
+        $this->model = $model;
         return $this;
     }
 
-    /**
-     * @param string $type
-     * @param string $name
-     * @param ?string $label
-     * @param array $attributes
-     * @return $this
-     */
-    public function addField(string $type, string $name, ?string $label = '', array $attributes =
-    []):
-static
+    public function addField(string $type, string $name, ?string $label = '', array $attributes = []): static
     {
-        if (!empty($this->model) && array_key_exists($name, $this->model) && !isset($attributes['value'])) {
-            $attributes['value'] = $this->model[$name];
+        if ($this->model && $this->model->{$name} !== null && !isset($attributes['value'])) {
+            $attributes['value'] = $this->model->{$name};
         }
 
         $this->fields[] = compact('type', 'name', 'label', 'attributes');
         return $this;
     }
 
-    public function addSelectField(
-        string $name,
-        string $label,
-        string $tableName,
-        string $valueField = 'id',
-        string $textField = 'name',
-        ?array $attributes = []
-    ): static
+    public function addSelectField(string $name, string $label, Model $model, string $valueField = 'id', string $textField = 'name', ?array $attributes = []): static
     {
-        $options = DB::table($tableName)->pluck($textField, $valueField)->toArray();
+        $options = $model::pluck($textField, $valueField)->toArray();
         $attributes['options'] = $options;
-        if (!empty($this->model[$name])) {
-            $attributes['selected'] = $this->model[$name];
+
+        if ($this->model && isset($this->model->{$name})) {
+            $attributes['selected'] = $this->model->{$name};
         }
+
         return $this->addField('select', $name, $label, $attributes);
     }
 
@@ -133,10 +79,6 @@ static
         return $this;
     }
 
-    /**
-     * @param string $method
-     * @return string
-     */
     public function setBaseMethod(string $method): string
     {
         return match ($this->method) {
@@ -188,12 +130,9 @@ static
             }
 
             if (isset($this->errors[$field['name']])) {
-
-                foreach ($this->errors[$field['name']] as $error)
-                {
+                foreach ($this->errors[$field['name']] as $error) {
                     $form .= "<p class='text-red-500 text-xs mt-1'>{$error}</p>";
                 }
-
             }
 
             $form .= "</div>";

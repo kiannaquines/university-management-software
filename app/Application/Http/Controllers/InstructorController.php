@@ -41,7 +41,7 @@ class InstructorController extends Controller {
     public function create() : View {
 
         $errors = session('errors') ? session('errors')->getBag('default')->getMessages() : [];
-        $instructorForm = new CreateInstructorForm(route('instructor.store'), 'POST', $errors, old())->render();
+        $instructorForm = new CreateInstructorForm(route('instructor.store'), 'POST', $errors)->render();
         return view('instructor.create',compact('instructorForm'));
     }
 
@@ -68,7 +68,7 @@ class InstructorController extends Controller {
             route('instructor.update', $instructor->id),
             'PUT',
             $errors,
-            (array) $instructor,
+            $instructor,
         )->render();
 
         return view('instructor.edit', compact('instructorForm'));

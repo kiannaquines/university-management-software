@@ -3,6 +3,7 @@
 namespace App\Domains\Core\Repository;
 
 use App\Domains\Core\Interface\IRepositoryBase;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Exception;
@@ -41,6 +42,7 @@ class RepositoryBase implements IRepositoryBase {
     public function update(array $data, string $id): bool
     {
         $entity = $this->find($id);
+        $data['updated_at'] = Carbon::now();
         return $entity->update($data);
     }
 

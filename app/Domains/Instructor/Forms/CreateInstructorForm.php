@@ -3,10 +3,12 @@
 namespace App\Domains\Instructor\Forms;
 
 use App\Helpers\DBFormBuilder;
+use App\Infrastructure\Models\DepartmentModel;
+use Illuminate\Database\Eloquent\Model;
 
 class CreateInstructorForm extends DBFormBuilder
 {
-    public function __construct($action = '', $method = 'POST', $errors = [], ?array $model = [])
+    public function __construct($action = '', $method = 'POST', $errors = [], ?Model $model = null)
     {
         parent::__construct($action, $method, $errors, $model);
         $this->createDepartmentForm();
@@ -28,8 +30,8 @@ class CreateInstructorForm extends DBFormBuilder
         ->addField('text', 'lastname', 'Lastname', ['placeholder' => 'Enter your lastname', 'class' => 'border-gray-300'])
         ->addField('select', 'extension', 'Extension', ['options' => ['' => 'None', 'jr' => 'Jr.', 'sr' => 'Sr.']])
         ->addField('text', 'employee_id', 'Employee ID', ['placeholder' => 'Enter your employee id', 'class' => 'border-gray-300'])
-        ->addSelectField('department', 'Department', 'departments', 'id', 'department')
-        ->setSubmitLabel('Update')
+        ->addSelectField('department', 'Department', new DepartmentModel(), 'id', 'department')
+        ->setSubmitLabel('Submit')
         ->setFormClass('max-w-7xl mx-auto sm:px-6 lg:px-8')
         ->setSubmitButtonClass('w-full bg-blue-600 text-white p-2 rounded-md text-sm cursor-pointer mt-3');
     }

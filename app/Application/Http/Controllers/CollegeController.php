@@ -37,8 +37,7 @@ class CollegeController extends Controller
 
         $collegeForm = new CreateCollegeForm(
             action: route('college.store'),
-            errors: $errors,
-            model: old()
+            errors: $errors
         )->render();
         return View('college.create',compact('collegeForm'));
     }
@@ -76,7 +75,7 @@ class CollegeController extends Controller
             route('college.update', $id),
             'PUT',
             $errors,
-            (array) $college,
+            $college,
         )->render();
         return View('college.edit',compact('collegeForm'));
     }

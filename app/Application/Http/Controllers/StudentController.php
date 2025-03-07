@@ -5,6 +5,7 @@ namespace App\Application\Http\Controllers;
 use App\Domains\College\Forms\DeleteStudentForm;
 use App\Domains\Student\Forms\StudentForm;
 use App\Domains\Student\Services\StudentService;
+use App\Infrastructure\Models\StudentModel;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -31,7 +32,7 @@ class StudentController extends Controller
     public function create(): View
     {
         $errors = session('errors') ? session('errors')->getBag('default')->getMessages() : [];
-        $studentForm = new StudentForm(route('students.store'), 'POST', $errors, old())->render();
+        $studentForm = new StudentForm(route('students.store'), 'POST', $errors)->render();
         return view('student.create',compact('studentForm'));
     }
 
@@ -61,22 +62,32 @@ class StudentController extends Controller
     /**
      * @throws Exception
      */
+
     public function edit(string $id): View
     {
         $errors = session('errors') ? session('errors')->getBag('default')->getMessages() : [];
-        $student = $this->studentService->getStudentById($id);
-        $studentForm = new StudentForm(route('students.update', $student->id), 'PUT', $errors, (array) $student)
-            ->render();
-        return view('student.edit',compact('studentForm'));
+        $student = StudentModel::findOrFail($id);
+
+        $studentForm = new StudentForm(
+            route('students.update', $student->id),
+            'PUT',
+            $errors,
+            $student
+        )->render();
+
+        return view('student.edit', compact('studentForm'));
     }
+
+
 
     /**
      * @throws Exception
      */
     public function confirm(string $id): View
     {
+        $errors = session('errors') ? session('errors')->getBag('default')->getMessages() : [];
         $student = $this->studentService->getStudentById($id);
-        $studentForm = new DeleteStudentForm(route('students.destroy', $student->id), 'DELETE', [], (array) $student)
+        $studentForm = new DeleteStudentForm(route('students.destroy', $student->id), 'DELETE', $errors, $student)
             ->render();
         return view('student.confirm',compact('student', 'studentForm'));
     }

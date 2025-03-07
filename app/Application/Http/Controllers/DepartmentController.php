@@ -39,7 +39,7 @@ class DepartmentController extends Controller {
 
     public function create() : View {
         $errors = session('errors') ? session('errors')->getBag('default')->getMessages() : [];
-        $departmentForm = new CreateDepartmentForm(route('department.store'), 'POST', $errors, old())->render();
+        $departmentForm = new CreateDepartmentForm(route('department.store'), 'POST', $errors)->render();
         return view('department.create',compact('departmentForm'));
     }
 
@@ -69,7 +69,7 @@ class DepartmentController extends Controller {
             route('department.update', $department->id),
             'PUT',
             $errors,
-            (array) $department)->render();
+            $department)->render();
         return view('department.edit',compact('departmentForm'));
     }
 

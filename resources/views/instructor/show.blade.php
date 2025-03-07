@@ -10,7 +10,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <div class="student-information mb-2">
-                        <h4>Firstname: {{ $instructor->fullname }}</h4>
+                        <h4>Firstname: {{ $instructor->firstname }} {{ $instructor->lastname }}</h4>
                         <h4>Employee ID: {{ $instructor->employee_id  }}</h4>
                         <h4>Created At: {{ $instructor->created_at?->format('F j, Y g:i a') }}</h4>
                         <h4>Update At: {{ $instructor->updated_at?->format('F j, Y g:i a') }}</h4>

@@ -3,10 +3,11 @@
 namespace App\Domains\Student\Forms;
 
 use App\Helpers\DBFormBuilder;
+use Illuminate\Database\Eloquent\Model;
 
 class StudentForm extends DBFormBuilder
 {
-    public function __construct($action = '', $method = 'POST', $errors = [], ?array $model = [])
+    public function __construct($action = '', $method = 'POST', $errors = [], ?Model $model = null)
     {
         parent::__construct($action, $method, $errors, $model);
         $this->studentForm();
