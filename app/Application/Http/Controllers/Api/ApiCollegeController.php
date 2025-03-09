@@ -7,6 +7,7 @@ use App\Application\Resources\CollegeCollection;
 use App\Application\Resources\CollegeResource;
 use App\Domains\College\Services\CollegeService;
 use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ApiCollegeController extends Controller {
@@ -46,4 +47,28 @@ class ApiCollegeController extends Controller {
         ]);
         return new CollegeResource($this->collegeService->createCollege($request));
     }
+
+    public function update(Request $request, string $id) : CollegeResource {
+        $validated = $request->validate([
+            'college' => 'required|string|max:255',
+        ]);
+        return new CollegeResource($this->collegeService->updateCollege($validated, $id));
+    }
+
+    /**
+     * @param string $id
+     * @return JsonResponse
+     * @throws Exception
+     */
+    public function destroy(string $id) : JsonResponse {
+        $result = $this->collegeService->deleteCollege($id);
+
+        if ($result) {
+            return redirect()->json(['message' => 'student deleted successfully.'], 200);
+        }
+
+        return redirect()->json(['message' => 'failed to delete student.'], 500);
+    }
+
+
 }
