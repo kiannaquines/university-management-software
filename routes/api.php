@@ -1,6 +1,7 @@
 <?php
 use App\Application\Http\Controllers\Api\ApiAuthController;
 use App\Application\Http\Controllers\Api\ApiStudentController;
+use App\Application\Http\Controllers\Api\ApiCollegeController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('auth')->group(function () {
@@ -15,6 +16,12 @@ Route::middleware('auth:sanctum')->prefix('students')->group(function () {
     Route::get('/{id}', [ApiStudentController::class, 'show']);
     Route::put('/{id}', [ApiStudentController::class, 'update']);
     Route::delete('/{id}', [ApiStudentController::class, 'destroy']);
+});
+
+Route::middleware('auth:sanctum')->prefix('colleges')->group(function () {
+    Route::get('/', [ApiCollegeController::class, 'index']);
+    Route::post('/', [ApiCollegeController::class, 'store']);
+    Route::get('/{id}', [ApiCollegeController::class, 'show']);
 });
 
 
