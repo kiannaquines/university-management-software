@@ -2,8 +2,8 @@
 
 namespace App\Application\Resources;
 
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Request;
 
 class CollegeResource extends JsonResource
 {

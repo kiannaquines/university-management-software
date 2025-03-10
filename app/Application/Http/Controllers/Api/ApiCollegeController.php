@@ -6,9 +6,9 @@ use App\Application\Http\Controllers\Controller;
 use App\Application\Resources\CollegeCollection;
 use App\Application\Resources\CollegeResource;
 use App\Domains\College\Services\CollegeService;
-use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Exception;
 
 class ApiCollegeController extends Controller {
     private CollegeService $collegeService;

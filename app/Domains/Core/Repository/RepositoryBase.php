@@ -42,7 +42,6 @@ class RepositoryBase implements IRepositoryBase {
     public function update(array $data, string $id): bool
     {
         $entity = $this->find($id);
-        $data['updated_at'] = Carbon::now();
         return $entity->update($data);
     }
 
