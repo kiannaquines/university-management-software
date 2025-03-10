@@ -2,8 +2,8 @@
 
 namespace App\Domains\Instructor\Forms;
 
+use App\Domains\Department\Entities\DepartmentModel;
 use App\Helpers\DBFormBuilder;
-use App\Infrastructure\Models\DepartmentModel;
 use Illuminate\Database\Eloquent\Model;
 
 class CreateInstructorForm extends DBFormBuilder

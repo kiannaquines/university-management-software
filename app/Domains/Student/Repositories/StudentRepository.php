@@ -7,12 +7,13 @@ use App\Domains\Student\Interfaces\IStudentRepository;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
+
 class StudentRepository extends RepositoryBase implements IStudentRepository
 {
 
     public function __construct()
     {
-        parent::__construct('App\Infrastructure\Models\StudentModel');
+        parent::__construct('App\Domains\Student\Entities\StudentModel');
     }
     /**
      * @return LengthAwarePaginator

@@ -4,16 +4,16 @@ namespace App\Domains\Instructor\Repositories;
 
 use App\Domains\Core\Repository\RepositoryBase;
 use App\Domains\Instructor\Interfaces\IInstructor;
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Exception;
 
 class InstructorRepository extends RepositoryBase implements IInstructor
 {
 
     public function __construct()
     {
-        parent::__construct('App\Infrastructure\Models\InstructorModel');
+        parent::__construct('App\Domains\Instructor\Entities\InstructorModel');
     }
 
     /**

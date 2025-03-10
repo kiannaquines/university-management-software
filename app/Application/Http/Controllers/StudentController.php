@@ -3,13 +3,13 @@
 namespace App\Application\Http\Controllers;
 
 use App\Domains\College\Forms\DeleteStudentForm;
+use App\Domains\Student\Entities\StudentModel;
 use App\Domains\Student\Forms\StudentForm;
 use App\Domains\Student\Services\StudentService;
-use App\Infrastructure\Models\StudentModel;
+use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
-use Exception;
 
 class StudentController extends Controller
 {

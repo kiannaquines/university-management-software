@@ -2,10 +2,12 @@
 
 namespace App\Application\Http\Controllers\Api;
 
-use App\Infrastructure\Models\User;
+use App\Domains\User\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Str;
+
 class ApiAuthController
 {
     /**
@@ -62,5 +64,77 @@ class ApiAuthController
         $request->user()->tokens()->delete();
 
         return response()->json(['message' => 'Logged out successfully']);
+    }
+
+    public function confirm(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'token' => 'required|string',
+        ]);
+
+        $user = User::where('confirmation_token', $validated['token'])->first();
+
+        if (!$user) {
+            return response()->json(['message' => 'Sorry, you have an invalid token.'], 401);
+        }
+
+        $user->confirmation_token = null;
+        $user->email_verified_at = now();
+        $user->save();
+
+        return response()->json(['message' => 'Your account has been confirmed.']);
+    }
+
+    /**
+     * Handle a password reset request.
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function forgot(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'email' => 'required|email|exists:users,email',
+        ]);
+
+        $user = User::where('email', $validated['email'])->first();
+
+        if (!$user) {
+            return response()->json(['message' => 'We have sent you a link to reset your password.']);
+        }
+
+        $token = Str::random(60);
+        $user->password_reset_token = $token;
+        $user->save();
+
+//        Mail::to($user->email)->send();
+
+        return response()->json(['message' => 'We have sent you a link to reset your password.']);
+    }
+
+    /**
+     * Reset the user's password using a token.
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function reset(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'token' => 'required|string',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $user = User::where('password_reset_token', $validated['token'])->first();
+
+        if (!$user) {
+            return response()->json(['message' => 'Invalid or expired reset token.'], 401);
+        }
+
+        $user->password = Hash::make($validated['password']);
+        $user->password_reset_token = null;
+        $user->save();
+
+        return response()->json(['message' => 'Your password has been reset successfully.']);
     }
 }

@@ -4,9 +4,9 @@ namespace App\Domains\College\Repositories;
 
 use App\Domains\College\Interfaces\ICollegeRepository;
 use App\Domains\Core\Repository\RepositoryBase;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Model;
 use Exception;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class CollegeRepository extends RepositoryBase implements ICollegeRepository {
     /**
@@ -14,7 +14,7 @@ class CollegeRepository extends RepositoryBase implements ICollegeRepository {
      */
     public function __construct()
     {
-        parent::__construct('App\Infrastructure\Models\CollegeModel');
+        parent::__construct('App\Domains\College\Entities\CollegeModel');
     }
 
     /**

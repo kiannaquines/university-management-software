@@ -2,8 +2,8 @@
 
 namespace App\Domains\Department\Forms;
 
+use App\Domains\College\Entities\CollegeModel;
 use App\Helpers\DBFormBuilder;
-use App\Infrastructure\Models\CollegeModel;
 use Illuminate\Database\Eloquent\Model;
 
 class CreateDepartmentForm extends DBFormBuilder

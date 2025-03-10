@@ -12,7 +12,7 @@ class DepartmentRepository extends RepositoryBase implements IDepartmentReposito
 
     public function __construct()
     {
-        parent::__construct('App\Infrastructure\Models\DepartmentModel');
+        parent::__construct('App\Domains\Department\Entities\DepartmentModel');
     }
 
     /**

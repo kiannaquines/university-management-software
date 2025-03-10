@@ -81,7 +81,7 @@ abstract class DBFormBuilder extends FormAttribute
 
     public function setBaseMethod(string $method): string
     {
-        return match ($this->method) {
+        return match ($method) {
             'PUT', 'DELETE', 'PATCH', 'POST' => 'POST',
             default => 'GET',
         };

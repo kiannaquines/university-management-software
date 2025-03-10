@@ -5,15 +5,11 @@ namespace App\Application\Http\Controllers\Api;
 use App\Application\Http\Controllers\Controller;
 use App\Application\Resources\StudentCollection;
 use App\Application\Resources\StudentResource;
-use App\Domains\College\Forms\DeleteStudentForm;
-use App\Domains\Student\Forms\StudentForm;
+use App\Domains\Student\Entities\StudentModel;
 use App\Domains\Student\Services\StudentService;
-use App\Infrastructure\Models\StudentModel;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\View\View;
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class ApiStudentController extends Controller
 {
@@ -98,7 +94,7 @@ class ApiStudentController extends Controller
         }
 
         if ($student->delete()) {
-            return response()->json(['message' => 'Student deleted successfully.'], 200);
+            return response()->json(['message' => 'Student deleted successfully.']);
         }
 
         return response()->json(['message' => 'Failed to delete student.'], 500);

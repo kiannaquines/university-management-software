@@ -2,7 +2,7 @@
 
 namespace App\Domains\College\Services;
 
-use App\Domains\College\Repositories\CollegeRepository;
+use App\Domains\College\Interfaces\ICollegeRepository;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -10,9 +10,9 @@ use Exception;
 
 class CollegeService
 {
-    protected CollegeRepository $collegeRepository;
+    protected ICollegeRepository $collegeRepository;
 
-    public function __construct(CollegeRepository $collegeRepository)
+    public function __construct(ICollegeRepository $collegeRepository)
     {
         $this->collegeRepository = $collegeRepository;
     }
@@ -39,7 +39,7 @@ class CollegeService
     }
 
     /**
-     * @param Request $data
+     * @param Request $request
      * @return Model
      * @throws Exception
      */
