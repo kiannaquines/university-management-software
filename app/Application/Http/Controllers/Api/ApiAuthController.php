@@ -2,7 +2,7 @@
 
 namespace App\Application\Http\Controllers\Api;
 
-use App\Domains\User\User;
+use App\Domains\User\Entities\User;
 use App\Mail\PasswordResetMail;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
