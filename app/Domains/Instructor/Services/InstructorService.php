@@ -2,19 +2,18 @@
 
 namespace App\Domains\Instructor\Services;
 
-use App\Domains\Instructor\Repositories\InstructorRepository;
-use Exception;
+use App\Domains\Core\Service\ServiceBase;
+use App\Domains\Instructor\Data\InstructorData;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Exception;
 
-class InstructorService
+class InstructorService extends ServiceBase
 {
-    private InstructorRepository $instructorRepository;
-
-    public function __construct(InstructorRepository $instructorRepository)
+    public function __construct()
     {
-        $this->instructorRepository = $instructorRepository;
+        parent::__construct('App\Domains\Instructor\Entities\InstructorModel');
     }
 
     /**
@@ -24,7 +23,7 @@ class InstructorService
      */
     public function getInstructorById(string $id) : object
     {
-        return $this->instructorRepository->findInstructorById($id);
+        return $this->find($id);
     }
 
     /**
@@ -35,33 +34,19 @@ class InstructorService
      */
     public function updateInstructor(Request $request, string $id): bool
     {
-        $validated = $request->validate([
-            'firstname' => 'required|string|max:255',
-            'middlename' => 'required|string|max:255',
-            'lastname' => 'required|string|max:255',
-            'extension' => 'nullable|string|max:255',
-            'employee_id' => 'required|string|max:255',
-            'department' => 'required|string|max:255',
-        ]);
-        return $this->instructorRepository->updateInstructorById($validated, $id);
+        $instructorData = InstructorData::from($request->all())->toArray();
+        return $this->update($instructorData, $id);
     }
 
     /**
      * @param Request $request
-     * @return bool
+     * @return Model
      * @throws Exception
      */
     public function createInstructor(Request $request): Model
     {
-        $validated = $request->validate([
-            'firstname' => 'required|string|max:255',
-            'middlename' => 'required|string|max:255',
-            'lastname' => 'required|string|max:255',
-            'extension' => 'nullable|string|max:255',
-            'employee_id' => 'required|string|max:255',
-            'department' => 'required|string|max:255',
-        ]);
-        return $this->instructorRepository->createNewInstructor($validated);
+        $instructorData = InstructorData::from($request->all());
+        return $this->create($instructorData->toArray());
     }
 
     /**
@@ -71,7 +56,7 @@ class InstructorService
      */
     public function deleteInstructor(string $id): bool
     {
-        return $this->instructorRepository->deleteInstructorById($id);
+        return $this->delete($id);
     }
 
     /**
@@ -80,6 +65,6 @@ class InstructorService
      */
     public function getAllInstructors(): LengthAwarePaginator
     {
-        return $this->instructorRepository->getAllInstructor();
+        return $this->all();
     }
 }

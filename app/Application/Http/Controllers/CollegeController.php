@@ -49,7 +49,7 @@ class CollegeController extends Controller
      */
     public function store(Request $request) : RedirectResponse
     {
-        $this->collegeService->createCollege($request);
+        $this->collegeService->createNewCollege($request);
         return redirect()->route('college.index')->with('success', 'College created successfully.');
     }
 

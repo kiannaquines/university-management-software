@@ -97,16 +97,7 @@ class StudentController extends Controller
      */
     public function update(Request $request, string $id): RedirectResponse
     {
-        $validated = $request->validate([
-            'firstname' => 'required|string|max:255',
-            'lastname' => 'required|string|max:255',
-            'middlename' => 'nullable|string|max:255',
-            'gender' => 'required|string|in:Male,Female',
-            'extension' => 'nullable|string|max:50',
-            'age' => 'required|integer|min:18|max:100',
-            'address' => 'required|string|max:255',
-        ]);
-        $this->studentService->updateStudent($validated, $id);
+        $this->studentService->updateStudent($request, $id);
         return redirect()->route('students.index')->with('success', 'Student updated successfully.');
     }
 

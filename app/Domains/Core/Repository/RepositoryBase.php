@@ -3,14 +3,14 @@
 namespace App\Domains\Core\Repository;
 
 use App\Domains\Core\Interface\IRepositoryBase;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Exception;
+
 class RepositoryBase implements IRepositoryBase {
 
     protected string $entityClass;
-
+    protected string $fieldName;
     /**
      * @param string $entityClass
      * @throws Exception
@@ -62,21 +62,31 @@ class RepositoryBase implements IRepositoryBase {
      */
     public function delete(string $id): bool
     {
-        $entity = $this->find($id);
-        return $entity->delete();
+        return $this->find($id)->delete();
     }
 
+
     /**
+     * Retrieve all entities with optional filtering and pagination.
+     *
      * @param string|null $keyword
      * @param int $perPage
+     * @param ?array|string $searchFields
      * @return LengthAwarePaginator
      */
-    public function all(?string $keyword=null, int $perPage=20): LengthAwarePaginator
+    public function all(?string $keyword = null, int $perPage = 20, array|string|null $searchFields = null):
+    LengthAwarePaginator
     {
         $query = $this->entityClass::query();
 
         if ($keyword) {
-            $query->where('college', 'LIKE', "%{$keyword}%");
+            $fields = is_array($searchFields) ? $searchFields : [$searchFields];
+
+            $query->where(function ($q) use ($keyword, $fields) {
+                foreach ($fields as $field) {
+                    $q->orWhere($field, 'LIKE', "%{$keyword}%");
+                }
+            });
         }
 
         return $query->paginate($perPage);

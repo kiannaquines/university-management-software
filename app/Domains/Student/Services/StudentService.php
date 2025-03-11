@@ -2,64 +2,54 @@
 
 namespace App\Domains\Student\Services;
 
-use App\Domains\Student\Repositories\StudentRepository;
+use App\Domains\Core\Service\ServiceBase;
+use App\Domains\Student\Data\StudentData;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
 use Exception;
 
-class StudentService
+class StudentService extends ServiceBase
 {
-    private StudentRepository $studentRepository;
-
-    public function __construct(StudentRepository $studentRepository)
+    public function __construct()
     {
-        $this->studentRepository = $studentRepository;
+        parent::__construct('App\Domains\Student\Entities\StudentModel');
     }
 
     /**
      * @throws Exception
      */
     public function getStudentById(string $id) : object {
-        return $this->studentRepository->findStudentById($id);
+        return $this->find($id);
     }
 
     /**
      * @throws Exception
      */
     public function getStudents() : LengthAwarePaginator {
-        return $this->studentRepository->getAllStudent();
+        return $this->all();
     }
 
     /**
      * @throws Exception
      */
     public function createStudent(Request $request) : Model {
-        $validated = $request->validate([
-            'firstname' => 'required|string|max:255',
-            'lastname' => 'required|string|max:255',
-            'middlename' => 'nullable|string|max:255',
-            'gender' => 'required|string|in:Male,Female',
-            'extension' => 'nullable|string|max:50',
-            'age' => 'required|integer|min:18|max:100',
-            'address' => 'required|string|max:255',
-            'student_id' => 'required|string|unique:students,student_id|max:50'
-        ]);
-        return $this->studentRepository->create($validated);
+        $studentData = StudentData::from($request->all());
+        return $this->create($studentData->toArray());
     }
 
     /**
      * @throws Exception
      */
-    public function updateStudent(array $student, string $id) : bool {
-        return $this->studentRepository->update($student, $id);
+    public function updateStudent(Request $request, string $id) : bool {
+        $studentData = StudentData::from($request->all());
+        return $this->update($studentData->toArray(), $id);
     }
 
     /**
      * @throws Exception
      */
     public function deleteStudent(string $id) : bool {
-        return $this->studentRepository->deleteStudentById($id);
+        return $this->delete($id);
     }
-
 }

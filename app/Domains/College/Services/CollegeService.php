@@ -2,29 +2,49 @@
 
 namespace App\Domains\College\Services;
 
-use App\Domains\College\Interfaces\ICollegeRepository;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
+use App\Domains\College\Data\CollegeData;
+use App\Domains\Core\Service\ServiceBase;
 use Exception;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Http\Request;
 
-class CollegeService
+class CollegeService extends ServiceBase
 {
-    protected ICollegeRepository $collegeRepository;
-
-    public function __construct(ICollegeRepository $collegeRepository)
+    public function __construct()
     {
-        $this->collegeRepository = $collegeRepository;
+        parent::__construct('App\Domains\College\Entities\CollegeModel');
+    }
+
+    /**
+     * @param string|null $keyword
+     * @param int $perPage
+     * @return LengthAwarePaginator
+     */
+    public function getAllColleges(?string $keyword = null, int $perPage = 20): LengthAwarePaginator
+    {
+        return $this->all($keyword, $perPage);
+    }
+
+
+    /**
+     * @param Request $request
+     * @return Model
+     * @throws Exception
+     */
+    public function createNewCollege(Request $request): Model
+    {
+        $collegeData = CollegeData::from($request->all());
+        return $this->create($collegeData->toArray());
     }
 
     /**
      * @param string $id
-     * @return object
+     * @return Model
      * @throws Exception
      */
-    public function getCollegeById(string $id) : object
-    {
-        return $this->collegeRepository->findCollegeById($id);
+    public function getCollegeById(string $id) : Model {
+        return $this->find($id);
     }
 
     /**
@@ -33,22 +53,9 @@ class CollegeService
      * @return bool
      * @throws Exception
      */
-    public function updateCollege(array $data, string $id): bool
+    public function updateCollege(array $data, string $id) : bool
     {
-        return $this->collegeRepository->updateCollegeById($data, $id);
-    }
-
-    /**
-     * @param Request $request
-     * @return Model
-     * @throws Exception
-     */
-    public function createCollege(Request $request): Model
-    {
-        $validated = $request->validate([
-            'college' => 'required|string|max:255',
-        ]);
-        return $this->collegeRepository->createNewCollege($validated);
+        return $this->update($data, $id);
     }
 
     /**
@@ -56,17 +63,8 @@ class CollegeService
      * @return bool
      * @throws Exception
      */
-    public function deleteCollege(string $id): bool
+    public function deleteCollege(string $id) : bool
     {
-        return $this->collegeRepository->deleteCollegeById($id);
-    }
-
-    /**
-     * @return LengthAwarePaginator
-     * @throws Exception
-     */
-    public function getAllColleges(): LengthAwarePaginator
-    {
-        return $this->collegeRepository->getAllCollege();
+        return $this->delete($id);
     }
 }

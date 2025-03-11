@@ -2,13 +2,9 @@
 
 namespace App\Infrastructure\Providers;
 
-use App\Domains\College\Interfaces\ICollegeRepository;
-use App\Domains\College\Repositories\CollegeRepository;
 use App\Domains\Core\Interface\IRepositoryBase;
 use App\Domains\Core\Repository\RepositoryBase;
-use App\Domains\Student\Interfaces\IStudentRepository;
 
-use App\Domains\Student\Repositories\StudentRepository;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 
@@ -25,8 +21,6 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->scoped(IRepositoryBase::class, RepositoryBase::class);
-        $this->app->scoped(ICollegeRepository::class, CollegeRepository::class);
-        $this->app->scoped(IStudentRepository::class, StudentRepository::class);
     }
 
     /**

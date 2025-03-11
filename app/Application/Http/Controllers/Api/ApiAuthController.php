@@ -3,9 +3,11 @@
 namespace App\Application\Http\Controllers\Api;
 
 use App\Domains\User\User;
+use App\Mail\PasswordResetMail;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class ApiAuthController
@@ -86,8 +88,6 @@ class ApiAuthController
     }
 
     /**
-     * Handle a password reset request.
-     *
      * @param Request $request
      * @return JsonResponse
      */
@@ -99,17 +99,15 @@ class ApiAuthController
 
         $user = User::where('email', $validated['email'])->first();
 
-        if (!$user) {
-            return response()->json(['message' => 'We have sent you a link to reset your password.']);
-        }
-
         $token = Str::random(60);
         $user->password_reset_token = $token;
         $user->save();
 
-//        Mail::to($user->email)->send();
+        Mail::to($user->email)->send(new PasswordResetMail($user, $token));
 
-        return response()->json(['message' => 'We have sent you a link to reset your password.']);
+        return response()->json([
+            'message' => 'We have sent you a link to reset your password.',
+        ]);
     }
 
     /**

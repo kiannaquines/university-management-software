@@ -2,24 +2,24 @@
 
 namespace App\Domains\Department\Services;
 
-use App\Domains\Department\Repositories\DepartmentRepository;
+use App\Domains\Core\Service\ServiceBase;
+use App\Domains\Department\Data\DepartmentData;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Exception;
-use Illuminate\Pagination\LengthAwarePaginator;
 
-class DepartmentService {
+class DepartmentService extends ServiceBase {
 
-    private DepartmentRepository $departmentRepository;
-    public function __construct(DepartmentRepository $departmentRepository)
+    public function __construct()
     {
-        $this->departmentRepository = $departmentRepository;
+        parent::__construct('App\Domains\Department\Entities\DepartmentModel');
     }
     /**
      * @throws Exception
      */
-    public function getDepartmentById(string $id) : object {
-        return $this->departmentRepository->findDepartmentById($id);
+    public function getDepartmentById(string $id) : Model {
+        return $this->find($id);
     }
 
     /**
@@ -27,7 +27,7 @@ class DepartmentService {
      * @throws Exception
      */
     public function getDepartments() : LengthAwarePaginator {
-        return $this->departmentRepository->getAllDepartment();
+        return $this->all();
     }
 
     /**
@@ -36,30 +36,22 @@ class DepartmentService {
      * @throws Exception
      */
     public function createDepartment(Request $request) : Model {
-        $validated = $request->validate([
-           'department' => 'required|string|max:255',
-           'department_description' => 'required|string|max:255',
-           'college_id' => 'required|string|max:255'
-        ]);
-        return $this->departmentRepository->createNewDepartment($validated);
+        $departmentData = DepartmentData::from($request->all());
+        return $this->create($departmentData->toArray());
     }
 
     /**
      * @throws Exception
      */
     public function updateDepartment(Request $request, string $id) : bool {
-        $validated = $request->validate([
-           'department' => 'required|string|max:255',
-           'department_description' => 'required|string|max:255',
-           'college_id' => 'required|string|max:255'
-        ]);
-        return $this->departmentRepository->update($validated, $id);
+        $departmentData = DepartmentData::from($request->all());
+        return $this->update($departmentData->toArray(), $id);
     }
 
     /**
      * @throws Exception
      */
     public function deleteDepartment(string $id) : bool {
-        return $this->departmentRepository->deleteDepartmentById($id);
+        return $this->delete($id);
     }
 }
