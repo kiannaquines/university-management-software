@@ -53,9 +53,10 @@ class CollegeService extends ServiceBase
      * @return bool
      * @throws Exception
      */
-    public function updateCollege(array $data, string $id) : bool
+    public function updateCollege(Request $data, string $id) : bool
     {
-        return $this->update($data, $id);
+        $collegeData = CollegeData::from($data->all());
+        return $this->update($collegeData->toArray(), $id);
     }
 
     /**

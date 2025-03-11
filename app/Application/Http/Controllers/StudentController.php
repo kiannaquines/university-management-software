@@ -41,13 +41,8 @@ class StudentController extends Controller
      */
     public function store(Request $request) : RedirectResponse
     {
-        $result = $this->studentService->createStudent($request);
-
-        if ($result) {
-            return redirect()->route('students.index')->with('success', 'Student created successfully.');
-        }
-
-        return redirect()->route('students.index')->with('error', 'student created failed.');
+        $this->studentService->createStudent($request);
+        return redirect()->route('students.index')->with('success', 'Student created successfully.');
     }
 
     /**

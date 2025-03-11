@@ -86,12 +86,9 @@ class CollegeController extends Controller
      */
     public function update(Request $request, string $id) : RedirectResponse
     {
-        $validated = $request->validate([
-            'id' => 'required|int|max:50',
-            'college' => 'required|string|max:255',
-        ]);
 
-        $result = $this->collegeService->updateCollege($validated, $id);
+
+        $result = $this->collegeService->updateCollege($request, $id);
 
         if ($result){
             return redirect()->route('college.index')->with('success', 'College updated successfully.');
@@ -106,9 +103,6 @@ class CollegeController extends Controller
     public function confirm(string $id) : View|RedirectResponse
     {
         $college = $this->collegeService->getCollegeById($id);
-        if (!$college){
-            return redirect()->route('college.index')->with('error', 'College could not be found.');
-        }
         return View('college.confirm', compact('college'));
     }
 
