@@ -2,7 +2,8 @@
 
 namespace App\Domains\Instructor\Forms;
 
-use App\Helpers\DBFormBuilder;
+use App\Domains\Department\Entities\DepartmentModel;
+use Kian\EasyLaravelForm\DBFormBuilder;
 
 class UpdateInstructorForm extends DBFormBuilder
 {
@@ -19,7 +20,7 @@ class UpdateInstructorForm extends DBFormBuilder
         ->addField('text', 'lastname', 'Lastname', ['placeholder' => 'Enter your lastname', 'class' => 'border-gray-300'])
         ->addField('select', 'extension', 'Extension', ['options' => ['' => 'None', 'jr' => 'Jr.', 'sr' => 'Sr.']])
         ->addField('text', 'employee_id', 'Employee ID', ['placeholder' => 'Enter your employee id', 'class' => 'border-gray-300'])
-        ->addSelectField('department', 'Department', 'departments', 'id', 'department')
+        ->addSelectField('department', 'Department',  new DepartmentModel(), 'id', 'department')
         ->setSubmitLabel('Update')
         ->setFormClass('max-w-7xl mx-auto sm:px-6 lg:px-8')
         ->setSubmitButtonClass('w-full bg-blue-600 text-white p-2 rounded-md text-sm cursor-pointer mt-3');

@@ -39,9 +39,8 @@ class InstructorController extends Controller {
      * @return View
      */
     public function create() : View {
-
-        $errors = session('errors') ? session('errors')->getBag('default')->getMessages() : [];
-        $instructorForm = new CreateInstructorForm(route('instructor.store'), 'POST', $errors)->render();
+        $form = new CreateInstructorForm(route('instructor.store'));
+        $instructorForm = $form->render();
         return view('instructor.create',compact('instructorForm'));
     }
 
@@ -62,15 +61,15 @@ class InstructorController extends Controller {
      */
     public function edit(string $id) : View {
         $instructor = $this->instructorService->getInstructorById($id);
-        $errors = session('errors') ? session('errors')->getBag('default')->getMessages() : [];
-
-        $instructorForm = new CreateInstructorForm(
-            route('instructor.update', $instructor->id),
-            'PUT',
-            $errors,
+        $form = new CreateInstructorForm(
+            route(
+                'instructor.update', 
+                $instructor->id
+            ),
             $instructor,
-        )->render();
-
+            'PUT',
+        );
+        $instructorForm = $form->render();
         return view('instructor.edit', compact('instructorForm'));
     }
 

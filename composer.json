@@ -10,6 +10,7 @@
         "darkaonline/l5-swagger": "^9.0",
         "dedoc/scramble": "^0.12.10",
         "filament/forms": "^3.2",
+        "formfy/easy-laravel-form": "^1.0",
         "inertiajs/inertia-laravel": "^2.0",
         "laravel/framework": "^12.0",
         "laravel/sanctum": "^4.0",

@@ -9,7 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Exception;
 
-class DepartmentService extends ServiceBase {
+class DepartmentService extends ServiceBase
+{
 
     public function __construct()
     {
@@ -18,7 +19,8 @@ class DepartmentService extends ServiceBase {
     /**
      * @throws Exception
      */
-    public function getDepartmentById(string $id) : Model {
+    public function getDepartmentById(string $id): Model
+    {
         return $this->find($id);
     }
 
@@ -26,7 +28,8 @@ class DepartmentService extends ServiceBase {
      * @return LengthAwarePaginator
      * @throws Exception
      */
-    public function getDepartments() : LengthAwarePaginator {
+    public function getDepartments(): LengthAwarePaginator
+    {
         return $this->all();
     }
 
@@ -35,7 +38,8 @@ class DepartmentService extends ServiceBase {
      * @return Model
      * @throws Exception
      */
-    public function createDepartment(Request $request) : Model {
+    public function createDepartment(Request $request): Model
+    {
         $departmentData = DepartmentData::from($request->all());
         return $this->create($departmentData->toArray());
     }
@@ -43,7 +47,8 @@ class DepartmentService extends ServiceBase {
     /**
      * @throws Exception
      */
-    public function updateDepartment(Request $request, string $id) : bool {
+    public function updateDepartment(Request $request, string $id): bool
+    {
         $departmentData = DepartmentData::from($request->all());
         return $this->update($departmentData->toArray(), $id);
     }
@@ -51,7 +56,8 @@ class DepartmentService extends ServiceBase {
     /**
      * @throws Exception
      */
-    public function deleteDepartment(string $id) : bool {
+    public function deleteDepartment(string $id): bool
+    {
         return $this->delete($id);
     }
 }

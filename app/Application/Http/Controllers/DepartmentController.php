@@ -38,8 +38,10 @@ class DepartmentController extends Controller {
     }
 
     public function create() : View {
-        $errors = session('errors') ? session('errors')->getBag('default')->getMessages() : [];
-        $departmentForm = new CreateDepartmentForm(route('department.store'), 'POST', $errors)->render();
+        $form = new CreateDepartmentForm(
+            route('department.store'),
+        );
+        $departmentForm = $form->render();
         return view('department.create',compact('departmentForm'));
     }
 
@@ -63,13 +65,14 @@ class DepartmentController extends Controller {
      * @throws Exception
      */
     public function edit(string $id) : View {
-        $errors = session('errors') ? session('errors')->getBag('default')->getMessages() : [];
         $department = $this->departmentService->getDepartmentById($id);
-        $departmentForm = new UpdateDepartmentForm(
-            route('department.update', $department->id),
-            'PUT',
-            $errors,
-            $department)->render();
+        $form = new UpdateDepartmentForm(
+            route(
+                'department.update',
+                $department->id),
+            $department
+        );
+        $departmentForm = $form->render();
         return view('department.edit',compact('departmentForm'));
     }
 

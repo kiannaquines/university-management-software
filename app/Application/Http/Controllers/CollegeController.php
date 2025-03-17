@@ -35,10 +35,11 @@ class CollegeController extends Controller
     {
         $errors = session('errors') ? session('errors')->getBag('default')->getMessages() : [];
 
-        $collegeForm = new CreateCollegeForm(
+        $form = new CreateCollegeForm(
             action: route('college.store'),
             errors: $errors
-        )->render();
+        );
+        $collegeForm = $form->render();
         return View('college.create',compact('collegeForm'));
     }
 
@@ -71,12 +72,11 @@ class CollegeController extends Controller
     {
         $errors = session('errors') ? session('errors')->getBag('default')->getMessages() : [];
         $college = $this->collegeService->getCollegeById($id);
-        $collegeForm = new UpdateCollegeForm(
+        $form = new UpdateCollegeForm(
             route('college.update', $id),
-            'PUT',
-            $errors,
-            $college,
-        )->render();
+            $college
+        );
+        $collegeForm = $form->render();
         return View('college.edit',compact('collegeForm'));
     }
 

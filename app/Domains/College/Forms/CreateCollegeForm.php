@@ -2,7 +2,7 @@
 
 namespace App\Domains\College\Forms;
 
-use App\Helpers\DBFormBuilder;
+use Kian\EasyLaravelForm\DBFormBuilder;
 use Illuminate\Database\Eloquent\Model;
 
 class CreateCollegeForm extends DBFormBuilder

@@ -6,10 +6,10 @@ use App\Domains\College\Forms\DeleteStudentForm;
 use App\Domains\Student\Entities\StudentModel;
 use App\Domains\Student\Forms\StudentForm;
 use App\Domains\Student\Services\StudentService;
-use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Exception;
 
 class StudentController extends Controller
 {
@@ -31,8 +31,8 @@ class StudentController extends Controller
 
     public function create(): View
     {
-        $errors = session('errors') ? session('errors')->getBag('default')->getMessages() : [];
-        $studentForm = new StudentForm(route('students.store'), 'POST', $errors)->render();
+        $form = new StudentForm(route('students.store'));
+        $studentForm = $form->render();
         return view('student.create',compact('studentForm'));
     }
 
@@ -63,13 +63,15 @@ class StudentController extends Controller
         $errors = session('errors') ? session('errors')->getBag('default')->getMessages() : [];
         $student = StudentModel::findOrFail($id);
 
-        $studentForm = new StudentForm(
-            route('students.update', $student->id),
+        $form = new StudentForm(
+            route(
+                'students.update',
+                $student->id
+            ),
+            $student,
             'PUT',
-            $errors,
-            $student
-        )->render();
-
+        );
+        $studentForm = $form->render();
         return view('student.edit', compact('studentForm'));
     }
 
@@ -82,8 +84,14 @@ class StudentController extends Controller
     {
         $errors = session('errors') ? session('errors')->getBag('default')->getMessages() : [];
         $student = $this->studentService->getStudentById($id);
-        $studentForm = new DeleteStudentForm(route('students.destroy', $student->id), 'DELETE', $errors, $student)
-            ->render();
+        $form = new DeleteStudentForm(
+            route(
+                'students.destroy',
+                $student->id
+            ),
+            $student
+        );
+        $studentForm = $form->render();
         return view('student.confirm',compact('student', 'studentForm'));
     }
 

@@ -10,7 +10,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <div class="flex justify-between items-center mb-3">
-                        <a href="{{ route('department.create') }}" class="btn text-white bg-blue-600 rounded p-2">Add
+                        <a href="{{ route('department.create') }}" class="btn text-white bg-blue-600 rounded p-2 mb-2">Add
                             New Department</a>
                     </div>
 
