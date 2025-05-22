@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('grades', function (Blueprint $table) {
-            $table->id()->primary();
+            $table->id();
             $table->foreignId('year_parent_id');
             $table->foreignId('student_parent_id');
             $table->float('grade')->nullable(false);
